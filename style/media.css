@@ -1,0 +1,45 @@
+
+@media (min-width:1300px) {
+    /* Добавить названия кнопкам в nav */
+    .nav__button:nth-child(1)::after {
+        content: 'Войти';
+    }
+    .nav__button:nth-child(2)::after {
+        content: 'Избранное';
+    }
+    .nav__button:nth-child(3)::after {
+        content: 'Корзина';
+    }
+}
+
+
+@media (max-width:1300px) {
+    
+    /* width--, gap-- */
+    .nav__buttons {
+        width: 10%;
+        gap: 10px;
+    }
+    /* width++ */
+    .search-bar {
+        width: 55%;
+    }
+    /* size++ */
+    .nav__button span {
+        font-size: 30px;
+    }
+}
+
+@media (max-width:1160px) {
+    /* nav__link-- */
+    .nav__link:nth-child(10) {
+        display: none;
+    }
+}
+
+@media (max-width:920px) {
+    /* nav__link-- */
+    .nav__link:nth-child(9) {
+        display: none;
+    }
+}
