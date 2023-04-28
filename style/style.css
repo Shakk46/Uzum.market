@@ -199,9 +199,11 @@ button {
 .nav__button span {
     font-size: 2vw;
 }
+.nav__button span {
+    font-size: 2vw;
+}
 
 
-/* -------------------------------------------------- Нижняя часть nav -------------------------------------------*/
 .nav__bottom {
     display: flex;
     align-items: center;
