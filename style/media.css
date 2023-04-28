@@ -17,7 +17,7 @@
     
     /* width--, gap-- */
     .nav__buttons {
-        width: 10%;
+        width: 15%;
         gap: 10px;
     }
     /* width++ */
@@ -26,7 +26,15 @@
     }
     /* size++ */
     .nav__button span {
-        font-size: 30px;
+        font-size: 3vw;
+    }
+
+    /* nav__link-- */
+    .nav__link:nth-child(9) {
+        display: none;
+    }
+    .nav__link:nth-child(8) {
+        display: none;
     }
 }
 
@@ -35,11 +43,59 @@
     .nav__link:nth-child(10) {
         display: none;
     }
+    /* margin-right -- */
+    .logo{
+        margin-right: 10px;
+    }
 }
 
 @media (max-width:920px) {
-    /* nav__link-- */
-    .nav__link:nth-child(9) {
+    /* убираем nav__link  */
+    .nav__link {
         display: none;
     }
+
+    /* search-bar -- */
+    .search-bar {
+        display: none;
+    }
+
+    /* появляется новый search-bar */
+    .search-bar-adapt {
+        display: block;
+    }
+
+    /* catalog -- */
+    .catalog{
+        display: none;
+    }
+    /* burger++ */
+    .burger{
+        display: flex;
+    }
+    /* width++ */
+    .logo{
+        width: 25%;
+    }
+    /* sticky */
+    .header {
+        position: sticky;
+        top: 5px;
+        right: 0;
+    }
+    /* buttons to right, width++*/
+    .nav__buttons {
+        margin-left:auto;
+        width:25%;
+    }
+    /* size++ */
+    .nav__button span {
+        font-size: 5vw;
+    }
+}
+@media (max-width:768px) {
+    
+}
+@media (max-width:481px) {
+    
 }
