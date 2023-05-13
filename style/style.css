@@ -5,8 +5,15 @@
     box-sizing: border-box;
     font-family: 'roboto';
 }
+img {
+    width: 100%;
+    height: 100%;
+}
 .active {
-    height: 400px !important;
+    height: 500px !important;
+}
+.hide {
+    display: none !important;
 }
 button {
     display: flex;
@@ -19,7 +26,6 @@ button {
 
 .container {
     max-width: 1240px;
-    height: 200vh;
     margin: 0 auto;
     padding: 15px;
     position: relative;
@@ -28,6 +34,7 @@ button {
 .header{
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 /* ----------------------------------------------------------- Верхняя часть nav ----------------------------------------------------*/
 .nav__top {
@@ -121,6 +128,8 @@ button {
     width: 100%;
     background-color: white;
     transition: 0.5s;
+    display: flex;
+    z-index: 9999;
 }
 .catalog__categories {
     width: 20%;
@@ -129,7 +138,17 @@ button {
     display: flex;
     flex-direction: column;
 }
-
+.catalog__subcategories {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.subcategory {
+    height: 30px;  
+}
 .category  {
     height: 45px;
     width: 100%;
@@ -139,6 +158,16 @@ button {
     gap: 10px;
     cursor:pointer;
     border-radius: 5px;
+}
+.catalog__subcategories h2 {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.subcategory {
+    cursor: pointer;
+}
+.catalog__subcategories h2:hover, .subcategory:hover {
+    color: #7000ff;
 }
 .category:hover {
     background-color: #f1f1f2;
@@ -152,15 +181,21 @@ button {
     color: rgba(92, 92, 214, 1);
     font-size: 14px;
 }
+.search {
+    display: flex;
+    position: relative;
+    width: 45%;
+    
+}
 .search-bar {
     display: flex;
     align-items: center;
-    width: 45%;
+    width: 100%;
 }
 .search-bar input {
     width: 100%;
     height: 40px;
-    font-size: 20px;
+    font-size: 14px;
     padding: 5px;
     outline: none;
     border: 1px solid grey;
@@ -177,6 +212,32 @@ button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: none;
+}
+.search-menu {
+    position: absolute;
+    width: 100%;
+    border: 1px solid rgba(118,121,127,0.3);
+    top: 40px;
+    left: 0;
+    background-color: white;
+    z-index: 100;
+    border-radius: 0 0 12px 12px;
+    padding: 8px 0 12px;
+}
+.suggestion {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding:0 15px ;
+    gap: 15px;
+    cursor: pointer;
+}
+.suggestion:hover {
+    background-color: #f4f5f5;
+}
+.suggestion__text {
+    font-size: 14px;
 }
 /* Три кнопки в правой части nav */
 .nav__buttons {
@@ -286,4 +347,323 @@ button {
     display: flex;
     align-items: center;
     gap:15px
+}
+
+
+
+/* -------------------- Main --------------------------------------- */
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.swiper, .banner {
+    width:100%;
+    aspect-ratio: 1.8;
+}
+.slide-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.banner-image {
+    width: 100%;
+    border-radius: 10px;
+}
+.comp {
+    width: 100%;
+    padding: 10px;
+}
+.comp__heading {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 15px;
+    width: fit-content;
+}
+.comp__heading span {
+    margin-top: 3px;
+}
+.comp__content {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-column-gap: 16px;
+    grid-row-gap: 32px;
+}
+.comp .product {
+    height: 450px;
+}
+.product {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor:pointer;
+}
+.product__info {
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 100%;
+}
+.product__image {
+    height: 70%;
+    width: 100%;
+    border-radius: 15px;
+}
+.product__name {
+    font-size: 14px;
+    font-weight: 300;
+}
+.product__rating {
+    color: #8a8d93;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.product__star {
+    width: 12px;
+    height: 12px;
+}
+.product__monthly {
+    font-size: 12px;
+    background-color: yellow;
+    width: fit-content;
+    padding: 2px;
+    border-radius: 5px;
+}
+.product__price {
+    margin-top: auto;
+}
+
+
+/* ----------------------------Product page-------------------------- */
+
+.product-page__top {
+    display: flex;
+
+}
+.product-page__left {
+    width: 50%;
+    margin-right: 10%;
+}
+.product-page__img {
+    width: 100%;
+    height: 40vw;
+    position: sticky;
+    top: 10px;
+    left: 0px;
+}
+.product-page__right {
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.product-page .product__rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.product-page .product__star {
+    width: 15px;
+    height: 15px;
+}
+.product-page .product__rating span {
+    margin-right: 15px;
+    display: block;
+    padding-top: 2px;
+    font-size: 14px;
+}
+.product-page__name {
+    font-size: 22px;
+}
+.product-page__seller, .product-page__delivery {
+    width: 50%;
+    display: flex;
+    gap: 40px;
+    font-size: 14px;
+}
+.product-page__right hr {
+    border-top: none;
+}
+.product-page__colors {
+    display: flex;
+    gap: 30px;
+
+}
+.product-page__colors button {
+    width: 150px;
+    height: 50px;
+    border-radius:10px;
+    border: 1px solid #000;
+}
+.button-color1 {
+    background-color: white;
+    color: black;
+}
+.button-color2 {
+    background-color: black;
+    color: white;
+}
+.product-page__price{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.product-page__price p:nth-child(2) {
+    font-size: 20px;
+}
+.product-page__monthly {
+    border-radius: 10px;
+    background-color: #f5f6fa;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 5px;
+    gap: 10px;
+    cursor: pointer;
+}
+.product-page__monthly:hover {
+    background-color: lightgrey;
+}
+.product-page__monthly span:nth-child(1) {
+    background-color: yellow;
+    border-radius: 5px;
+    padding: 5px;
+}
+.product-page .material-icons {
+    margin-left: auto;
+}
+.product-page__actions {
+    display: flex;
+    gap: 25px;
+}
+.product-page__actions button{
+    width: 45%;
+    height: 56px;
+    border-radius: 16px;
+    font-size: 16px;
+
+}
+.product-page__bucket {
+    background-color: #7000ff;
+    color: white;
+    border: none;
+}
+.product-page__favorite {
+    border: 2px solid #7000ff;
+    color: #7000ff;
+    background-color: white;
+    
+}
+.product-page__description {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-page__bottom {
+    max-width: 900px;
+    margin: 50px auto;
+}
+.product-page__heading {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    color: #7000ff;
+    font-size: 14px;
+    border-top:1px solid lightgrey;
+    border-bottom:1px solid lightgrey;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+/* reviews */
+.reviews {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.review {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom:30px;
+}
+.hz {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.review__author {
+    font-size: 16px;
+}
+.review__date {
+    font-size: 12px;
+    color: lightgrey;
+}
+.review__text {
+    margin-top: 10px;
+}
+
+/* account-modal */
+.account-modal {
+    width: 500px;
+    border-radius:30px;
+    background-color: white;
+    padding: 50px;
+    position: fixed;
+    top: 100px;
+    left: calc((100% - 500px) / 2);
+    
+    
+}
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.form-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap:10px;
+} 
+.registration h3, .sign-in h3 {
+    text-align: center;
+    font-weight: 400;
+}
+.account-modal input {
+    width: 70%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #8a8d93;
+    padding: 5px;
+}
+.account-modal input:focus {
+    outline: none;
+}
+.submit {
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #7000ff;
+    border: none;
+    color: white;
+}
+.account-modal p {
+    margin-top: 25px;
+    text-align: center;
+}
+#change {
+    cursor: pointer;
+    color: blue;
 }

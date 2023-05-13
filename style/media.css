@@ -77,12 +77,6 @@
     .logo{
         width: 25%;
     }
-    /* sticky */
-    .header {
-        position: sticky;
-        top: 5px;
-        right: 0;
-    }
     /* buttons to right, width++*/
     .nav__buttons {
         margin-left:auto;
@@ -92,9 +86,32 @@
     .nav__button span {
         font-size: 5vw;
     }
+
+    /* Main */
+    /* products */
+    .comp__content {
+        grid-template-columns: repeat(3,1fr);
+    }
 }
 @media (max-width:768px) {
-    
+    .comp .product {
+        height: 400px;
+    }
+    .product__name {
+        font-size: 12px;
+    }
+
+    .product-page__name {
+        font-size: 18px;
+    }
+    .product-page__seller, .product-page__delivery, .product-page__description{
+        font-size: 14px;
+    }
+}
+@media (max-width:635px) {
+    .comp__content {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 @media (max-width:481px) {
     

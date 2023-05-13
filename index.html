@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./style./style.css">
     <link rel="stylesheet" href="./style/media.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>Uzum  Market</title>
 </head>
 <body>
 
@@ -55,56 +56,80 @@
                     </button>
                     <div class="catalog-menu">
                         <div class="catalog__categories">
-                            <div class="category">
-                                <div class="category__img"><span class="material-icons">headphones</span></div>
+                            <div class="category" id="electronics">
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M3 11C3 6.02944 7.02944 2 12 2C16.9706 2 21 6.02944 21 11V16H19V11C19 7.13401 15.866 4 12 4C8.13401 4 5 7.13401 5 11V16H3V11Z" fill="#76797F"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5 13C3.89543 13 3 13.8954 3 15V19C3 20.1046 3.89543 21 5 21H7C8.10457 21 9 20.1046 9 19V15C9 13.8954 8.10457 13 7 13H5ZM17 13C15.8954 13 15 13.8954 15 15V19C15 20.1046 15.8954 21 17 21H19C20.1046 21 21 20.1046 21 19V15C21 13.8954 20.1046 13 19 13H17Z" fill="#76797F"></path></svg>
+                                </div>
                                 <p class="category__name">Электроника</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
-                            <div class="category">
-                                <div class="category__img"><span class="material-icons">iron</span></div>
+                            <div class="category" id="appliances">
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M7 18C5.89543 18 5 18.8954 5 20V22H19V20C19 18.8954 18.1046 18 17 18H7ZM12 21C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21Z" fill="#6226D9"></path><path opacity="0.25" d="M13 20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20C11 19.4477 11.4477 19 12 19C12.5523 19 13 19.4477 13 20Z" fill="#6226D9"></path><path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 11.1046 3.89543 12 5 12H7V17H17L19 3H7H5ZM7 5H5V10H7V5Z" fill="#6226D9"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M17.8571 11L17.7143 12H12V11H17.8571ZM18.2857 8L18.1429 9H12V8H18.2857ZM18.7143 5L18.5714 6H12V5H18.7143Z" fill="#6226D9"></path></svg>
+                                </div>
                                 <p class="category__name">Бытовая техника</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">checkroom</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M7.99963 3H5V20C5 20.5523 5.44772 21 6 21H18C18.5523 21 19 20.5523 19 20V3H16.0004C15.0882 4.21445 13.6358 5 12 5C10.3642 5 8.91184 4.21445 7.99963 3Z" fill="#1AB2FF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1.89431 4.55279L4.99989 3V9.25L4.39431 9.55279C3.90033 9.79978 3.29966 9.59955 3.05267 9.10557L1.4471 5.89443C1.20011 5.40045 1.40034 4.79978 1.89431 4.55279ZM22.1053 4.55279L18.9998 3V9.25L19.6053 9.55279C20.0993 9.79978 20.7 9.59955 20.947 9.10557L22.5525 5.89443C22.7995 5.40045 22.5993 4.79978 22.1053 4.55279Z" fill="#1AB2FF"></path></svg>
+                                </div>
                                 <p class="category__name">Одежда</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">ice_skating</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00488 16.2129C2.3949 16.3047 2.79664 16.3939 3.50463 16.5171C4.92167 16.7635 6.89216 17.0097 9.10646 17.0097H21.6064C21.6064 17.5619 21.1587 18.0097 20.6064 18.0097H9.10646C6.82076 18.0097 4.79125 17.7558 3.33329 17.5023C2.60379 17.3754 2.41174 17.293 2.00488 17.1973V16.2129Z" fill="#FF1919"></path><path opacity="0.25" d="M3.33305 16.5024C4.79101 16.7559 6.82052 17.0098 9.10622 17.0098H21.6064V15.0098C15.362 15.0098 9.72082 16.5983 3.50439 15.5172C2.79639 15.394 2.21582 15.2598 2.21582 15.2598L2.00879 16.2168C2.41565 16.3125 2.60354 16.3755 3.33305 16.5024Z" fill="#FF1919"></path><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M2.21143 15.264C2.34012 14.784 2.60579 14.2594 3.10651 14.0091L3.10651 14.0099C3.10651 14.1765 3.50651 14.5099 5.10651 14.5099H8.36854C8.72227 14.5099 8.9636 14.1526 8.83223 13.8242L8.13284 12.0757C10.5602 11.1222 12.9662 10.0704 13.1065 9.50906C13.6065 7.50928 14.6065 6.50905 15.1065 6.00906C15.7649 5.35063 17.3464 6.55712 18.1965 7.20561L18.1965 7.20562L18.1965 7.20564C18.3671 7.33578 18.5082 7.44345 18.6065 7.50906C18.807 7.64287 19.1354 7.81662 19.4893 8.00383C20.2406 8.40125 21.1065 8.85934 21.1065 9.12486C21.1065 9.27507 21.1805 9.66244 21.2715 10.1392L21.2715 10.1392L21.2715 10.1393C21.4172 10.9021 21.6065 11.8939 21.6065 12.5093V15.0131C19.4405 15.0415 17.2863 15.2476 15.1366 15.4534H15.1366C11.2596 15.8244 7.3969 16.1941 3.50464 15.5172C2.99707 15.4289 2.56122 15.3407 2.21143 15.264ZM18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12C16 13.1046 16.8954 14 18 14Z" fill="#FF1919"></path><path opacity="0.25" d="M5.10645 14.5097C3.50645 14.5097 3.10645 14.1764 3.10645 14.0097L8.13379 12.0796L8.83195 13.8239C8.96341 14.1523 8.72208 14.5097 8.3683 14.5097H5.10645Z" fill="#FF1919"></path><path opacity="0.25" d="M20 12C20 13.1046 19.1046 14 18 14C16.8954 14 16 13.1046 16 12C16 10.8954 16.8954 10 18 10C19.1046 10 20 10.8954 20 12Z" fill="#FF1919"></path></svg>
+                                </div>
                                 <p class="category__name">Обувь</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">backpack</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M8 6C6.34315 6 5 7.34315 5 9V17C5 15.3431 6.34315 14 8 14H16C17.6569 14 19 15.3431 19 17V9C19 7.34315 17.6569 6 16 6H8Z" fill="#FF9500"></path><path opacity="0.5" d="M5 17C5 15.3431 6.34315 14 8 14H16C17.6569 14 19 15.3431 19 17V19C19 20.6569 17.6569 22 16 22H8C6.34315 22 5 20.6569 5 19V17Z" fill="#FF9500"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8 6C8 3.79086 9.79086 2 12 2C14.2091 2 16 3.79086 16 6H14C14 4.89543 13.1046 4 12 4C10.8954 4 10 4.89543 10 6H8ZM5 11.1709C3.83481 11.5827 3 12.694 3 14.0002V18.0002C3 19.1048 3.89543 20.0002 5 20.0002H5.17071C5.06015 19.6874 5 19.3508 5 19.0002V11.1709ZM18.8293 20.0002H19C20.1046 20.0002 21 19.1048 21 18.0002V14.0002C21 12.694 20.1652 11.5827 19 11.1709V19.0002C19 19.3508 18.9398 19.6874 18.8293 20.0002ZM11 8C10.4477 8 10 8.44772 10 9V10C10 10.5523 10.4477 11 11 11H13C13.5523 11 14 10.5523 14 10V9C14 8.44772 13.5523 8 13 8H11Z" fill="#FF9500"></path></svg>
+                                </div>
                                 <p class="category__name">Аксессуары</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">woman</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M6.57651 4C6.27224 4 6.0385 4.26949 6.08154 4.57071L7.93868 17.5707C7.97387 17.817 8.18483 18 8.43365 18H15.5664C15.8152 18 16.0261 17.817 16.0613 17.5707L17.1429 10H6.85725L6.57153 8H17.4286L17.9185 4.57071C17.9615 4.26949 17.7278 4 17.4235 4H6.57651Z" fill="#FF3388"></path><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M6.85725 10L6.57153 8H17.4287L17.143 10H6.85725Z" fill="#FF3388"></path><path d="M9 18H15V20.5C15 21.3284 14.3284 22 13.5 22H10.5C9.67157 22 9 21.3284 9 20.5V18Z" fill="#FF3388"></path></svg>
+                                </div>
                                 <p class="category__name">Красота</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">favorite_border</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M12 21.4578C12.1915 21.4578 12.383 21.3921 12.5358 21.2605C12.9065 20.9414 13.369 20.5684 13.8889 20.149C16.9501 17.68 22 13.6069 22 9.5C22 6.3 19.45 4 16.5 4C13.65 4 12 6.33398 12 6.33398V21.4578Z" fill="#FF5319"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.33398C12 6.33398 10.3532 4 7.5 4C4.55 4 2 6.3 2 9.5C2 13.6073 7.05204 17.682 10.1127 20.1505C10.632 20.5693 11.094 20.9419 11.4642 21.2606C11.617 21.3921 11.8085 21.4578 12 21.4578V6.33398Z" fill="#FF5319"></path></svg>
+                                </div>
                                 <p class="category__name">Здоровье</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">home</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.25" fill-rule="evenodd" clip-rule="evenodd" d="M9.5 21H14.5C14.2239 21 14 20.7761 14 20.5V15.5C14 15.2239 13.7761 15 13.5 15H10.5C10.2239 15 10 15.2239 10 15.5V20.5C10 20.7761 9.77614 21 9.5 21Z" fill="#FF5319"></path><path opacity="0.75" d="M4 13L12 6L20 13V20.5C20 20.7761 19.7761 21 19.5 21H14.5C14.2239 21 14 20.7761 14 20.5V15.5C14 15.2239 13.7761 15 13.5 15H10.5C10.2239 15 10 15.2239 10 15.5V20.5C10 20.7761 9.77614 21 9.5 21H4.5C4.22386 21 4 20.7761 4 20.5V13Z" fill="#FF5319"></path><path d="M2.32678 11.377C2.14614 11.1686 2.16835 10.8533 2.37643 10.6723L11.6725 2.58535C11.8607 2.42165 12.1407 2.42166 12.3289 2.58538L21.6234 10.6723C21.8315 10.8533 21.8537 11.1686 21.6731 11.377L21.0276 12.1216C20.8467 12.3303 20.5307 12.3528 20.3221 12.1717L12.3284 5.23402C12.1404 5.07085 11.861 5.07084 11.673 5.23399L3.67771 12.1717C3.46907 12.3528 3.15314 12.3303 2.9722 12.1216L2.32678 11.377Z" fill="#FF5319"></path></svg>
+                                </div>
                                 <p class="category__name">Товары для дома</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">foundation</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M19 4H21C21.5523 4 22 4.44772 22 5V11C22 11.5523 21.5523 12 21 12H13V13H11V11C11 10.4477 11.4477 10 12 10H20V6H19V4Z" fill="#6226D9"></path><path opacity="0.75" d="M10 14C10 13.4477 10.4477 13 11 13H13C13.5523 13 14 13.4477 14 14V21C14 21.5523 13.5523 22 13 22H11C10.4477 22 10 21.5523 10 21V14Z" fill="#6226D9"></path><path opacity="0.75" d="M4 3C4 2.44772 4.44772 2 5 2H18C18.5523 2 19 2.44772 19 3V7C19 7.55228 18.5523 8 18 8H5C4.44772 8 4 7.55228 4 7V3Z" fill="#6226D9"></path></svg>
+                                </div>
                                 <p class="category__name">Строительство и ремонт</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
                             <div class="category">
-                                <div class="category__img"><span class="material-icons">drive_eta</span></div>
+                                <div class="category__img">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.75" fill-rule="evenodd" clip-rule="evenodd" d="M6 17H3V19C3 19.5523 3.44772 20 4 20H5C5.55228 20 6 19.5523 6 19V17ZM21 17H18V19C18 19.5523 18.4477 20 19 20H20C20.5523 20 21 19.5523 21 19V17Z" fill="#FF1919"></path><path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M6.6845 4C5.84442 4 5.09389 4.52498 4.80579 5.31412L2.70557 11.0669C3.25588 10.4145 4.07944 10 4.99981 10H18.9998C19.9202 10 20.7438 10.4145 21.2941 11.067L19.1939 5.31412C18.9058 4.52499 18.1552 4 17.3152 4H6.6845Z" fill="#FF1919"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1.84903 9H3.50006L2.77433 10.9884C3.3233 10.3814 4.11711 10 5 10H19C20.6569 10 22 11.3431 22 13V16C22 17.1046 21.1046 18 20 18H4C2.89543 18 2 17.1046 2 16V13C2 12.2316 2.28885 11.5308 2.76389 11H2.34903C2.15965 11 1.98652 10.893 1.90182 10.7236L1.40182 9.72361C1.23559 9.39116 1.47734 9 1.84903 9ZM22.1911 9H20.5401L21.2701 11H21.6911C21.8805 11 22.0536 10.893 22.1383 10.7236L22.6383 9.72361C22.8046 9.39116 22.5628 9 22.1911 9ZM7 14C7 12.8954 6.10457 12 5 12C4.44772 12 4 12.4477 4 13V13.5C4 14.3284 4.67157 15 5.5 15H6.4C6.73137 15 7 14.7314 7 14.4V14ZM17 14C17 12.8954 17.8954 12 19 12C19.5523 12 20 12.4477 20 13V13.5C20 14.3284 19.3284 15 18.5 15H17.6C17.2686 15 17 14.7314 17 14.4V14Z" fill="#FF1919"></path><path opacity="0.25" fill-rule="evenodd" clip-rule="evenodd" d="M5 12C6.10457 12 7 12.8954 7 14V14.4C7 14.7314 6.73137 15 6.4 15H5.5C4.67157 15 4 14.3284 4 13.5V13C4 12.4477 4.44772 12 5 12ZM19 12C17.8954 12 17 12.8954 17 14V14.4C17 14.7314 17.2686 15 17.6 15H18.5C19.3284 15 20 14.3284 20 13.5V13C20 12.4477 19.5523 12 19 12Z" fill="#FF1919"></path></svg>
+                                </div>
                                 <p class="category__name">Автотовары</p>
                                 <span class="category__arrow material-icons">navigate_next</span>
                             </div>
+                        </div>
+
+                        <div class="catalog__subcategories">
+                            
                         </div>
 
 
@@ -112,23 +137,39 @@
 
 
 
-                    <div class="search-bar">
-                        <input type="text" name="search">
-                        <button class="search__button">
-                            <span class="material-icons">search</span>
-                        </button>
+                    <div class="search">
+                        <div class="search-bar">
+                            <input type="text" name="search" autocomplete="off">
+                            <button class="search__button">
+                                <span class="material-icons">search</span>
+                            </button>
+                        </div>
+                        <div class="search-menu hide">
+                            <div class="suggestion">
+                                <span class="material-icons" style="font-size:20px; color:grey;">search</span>
+                                <div class="suggestion__text">
+                                    наушники
+                                </div>
+                            </div>
+                            <div class="suggestion">
+                                <span class="material-icons" style="font-size:20px; color:grey;">search</span>
+                                <div class="suggestion__text">
+                                    наушники
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="nav__buttons">
                         <button class="log-in nav__button">
-                            <span class="material-icons">
-                                person
-                                </span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C9.79086 3 8 4.79086 8 7V8C8 10.2091 9.79086 12 12 12C14.2091 12 16 10.2091 16 8V7C16 4.79086 14.2091 3 12 3ZM9.5 7C9.5 5.61929 10.6193 4.5 12 4.5C13.3807 4.5 14.5 5.61929 14.5 7V8C14.5 9.38071 13.3807 10.5 12 10.5C10.6193 10.5 9.5 9.38071 9.5 8V7ZM5.50232 19.3686C5.97321 16.2577 9.01803 14.5 12.0022 14.5C14.9858 14.5 18.031 16.2577 18.5019 19.3686C18.5046 19.3866 18.5025 19.3972 18.5 19.4048C18.497 19.4137 18.4903 19.4269 18.4759 19.442C18.4453 19.4741 18.3894 19.5039 18.3171 19.5039H5.68718C5.61487 19.5039 5.55898 19.4741 5.52838 19.442C5.51394 19.4269 5.50726 19.4137 5.50427 19.4048C5.50174 19.3972 5.49961 19.3865 5.50232 19.3686ZM12.0022 13C8.57321 13 4.64037 15.0404 4.01922 19.1441C3.85624 20.2208 4.75727 21.0039 5.68718 21.0039H18.3171C19.247 21.0039 20.148 20.2208 19.985 19.1441C19.3638 15.0404 15.4306 13 12.0022 13Z" fill="black"></path>
+                            </svg>
                         </button>
                         <button class="favorites nav__button">
-                            <span class="material-icons">favorite</span>
+                            <img width="24px" height="24px" src="data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.5 5.5C5.26935 5.5 3.5 7.30906 3.5 9.5C3.5 10.4282 3.87684 11.4436 4.5487 12.5105C5.21692 13.5716 6.14148 14.6274 7.15127 15.6219C8.55769 17.007 10.0318 18.1879 11.1708 19.1003C11.4734 19.3427 11.7523 19.5661 12 19.7694C12.2477 19.5661 12.5266 19.3427 12.8292 19.1003C13.9682 18.1879 15.4423 17.007 16.8487 15.6219C17.8585 14.6274 18.7831 13.5716 19.4513 12.5105C20.1232 11.4436 20.5 10.4282 20.5 9.5C20.5 7.30898 18.7314 5.5 16.5 5.5C14.3473 5.5 13.0738 7.20226 12.7262 7.74742C12.3889 8.27655 11.6111 8.27653 11.2738 7.74742C10.9262 7.20225 9.65273 5.5 7.5 5.5ZM2 9.5C2 6.49094 4.43065 4 7.5 4C9.73143 4 11.2249 5.30207 12 6.21581C12.7751 5.30207 14.2686 4 16.5 4C19.5702 4 22 6.49102 22 9.5C22 10.8218 21.4706 12.1189 20.7206 13.3098C19.9669 14.5066 18.954 15.6539 17.9013 16.6906C16.4429 18.1269 14.808 19.4384 13.6502 20.3672C13.1649 20.7565 12.7634 21.0786 12.4939 21.3144C12.2111 21.5619 11.7889 21.5619 11.5061 21.3144C11.2366 21.0786 10.8351 20.7565 10.3498 20.3672C9.19201 19.4384 7.55712 18.1269 6.09873 16.6906C5.04602 15.6539 4.03308 14.5066 3.27942 13.3098C2.52941 12.1189 2 10.8218 2 9.5Z' fill='%23141415'/%3e %3c/svg%3e">
                         </button>
                         <button class="basket nav__button">
-                            <span class="material-icons">shopping_basket</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="slightly transparent"><path fill-rule="evenodd" clip-rule="evenodd" d="M9 6.5C9 4.88779 10.2402 3.5 12 3.5C13.7598 3.5 15 4.88779 15 6.5V7.5H9V6.5ZM7.5 9V11.5H9V9H15V11.5H16.5V9H18.5V19.75C18.5 20.1642 18.1642 20.5 17.75 20.5H6.25C5.83579 20.5 5.5 20.1642 5.5 19.75V9H7.5ZM7.5 7.5V6.5C7.5 4.11221 9.35984 2 12 2C14.6402 2 16.5 4.11221 16.5 6.5V7.5H19.25H20V8.25V19.75C20 20.9926 18.9926 22 17.75 22H6.25C5.00736 22 4 20.9926 4 19.75V8.25V7.5H4.75H7.5Z" fill="#141415"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -200,7 +241,41 @@
         </main>
     </div>
             
+    
+    <div class="account-modal">
+        <div class="registration form-content">
+            <h3>
+                Зарегистрироваться
+            </h3>
+            
+            <form action="#" class="reg__form">
+                <input type="text" name="name" placeholder="Имя" required>
+                <input type="text" name="surname" placeholder="Фамилия">
+                <input type="text" name="username" autocomplete="off" placeholder="Логин" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <button type="submit" class="submit">Зарегистрироваться</button>
+            </form>
+
+            
+        </div>
         
+        <div class="sign-in form-content hide">
+            <h3>
+                Войти
+            </h3>
+
+            <form action="#" class="sign-in__form">
+                <input type="text" name="username" autocomplete="off" placeholder="Логин" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <button type="submit" class="submit">Войти</button>
+            </form>
+        </div>
+        <p class="change">
+            <span>Уже есть аккаунт?</span>
+            <span id="change">Войти</span>
+        </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="./script/script.js"></script>
 </body>
 </html>
