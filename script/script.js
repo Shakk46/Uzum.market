@@ -3,72 +3,53 @@ const doc = document
 const body = doc.body
 const header = doc.querySelector('.header')
 const main = doc.querySelector('.main')
-//search-bar 
-const searchBarInput = doc.querySelector('.search-bar input')
-const searchMenu = doc.querySelector('.search-menu')
-// Адаптивный search-bar
-const searchBarAdapt = doc.querySelector('.search-bar-adapt')
-const searchBarAdaptInput = doc.querySelector('.search-bar-adapt input')
-const searchBarClose = doc.querySelector('.search__close')
-// Каталог комп версия 
-const catalog = doc.querySelector('.catalog')
-// Линк "Ещё"
-const more = doc.querySelector('#more')
-const catalogMenu = doc.querySelector('.catalog-menu')
-const categories = doc.querySelectorAll('.category')
-const catalogSub = doc.querySelector('.catalog__subcategories')
 const arrow = createDOMElement('span', 'material-icons')
 arrow.textContent = 'navigate_next'
-const date = new Date()
-const registration = doc.querySelector('.registration')
-const signIn = doc.querySelector('.sign-in')
-const changeP = doc.querySelector('.change')
-const changeText = doc.querySelector('.change span')
-const changeSpan = doc.querySelector('#change')
-const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
+let allProducts = [];
+
+// Current account
+let currentAccount;
 let db;
 
-fetch('http://localhost:3000/database')
-    .then(res => res.json())
-    .then(res => {
-        db = res
-        console.log('db is ready');
-
-        // renderMain()
-        renderProductPage(db.products.electronics[0])
-
-
-        const swiper = new Swiper('.swiper', {
-            // Optional parameters
-            direction: 'horizontal',
-            loop: true,
-          
-            // If we need pagination
-            pagination: {
-              el: '.swiper-pagination',
-            },
-          
-            // Navigation arrows
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-          
-            // And if we need scrollbar
-            scrollbar: {
-              el: '.swiper-scrollbar',
-            },
-        });
-    })
 
 function createDOMElement(type, className) {
     const element = doc.createElement(type)
     element.className = className
     return element
 }
+function clearMain() {
+    main.innerHTML = ''
+}
 
 
 
+const categories = doc.querySelectorAll('.category')
+const catalogSub = doc.querySelector('.catalog__subcategories')
+
+
+
+
+
+// ---------------------------------------------HEADER-------------------------------------------------
+
+
+
+//search-bar 
+const searchBarInput = doc.querySelector('.search-bar input')
+const searchMenu = doc.querySelector('.search-menu')
+{// Анимация выпадения подсказок в поиске
+searchBarInput.addEventListener('focus', () => {
+    searchMenu.classList.toggle('hide')
+})
+searchBarInput.addEventListener('blur', () => {
+    searchMenu.classList.toggle('hide')
+})
+}
+
+// Адаптивный search-bar
+const searchBarAdapt = doc.querySelector('.search-bar-adapt')
+const searchBarAdaptInput = doc.querySelector('.search-bar-adapt input')
+const searchBarClose = doc.querySelector('.search__close')
 {// Анимация расширения поиска
 searchBarAdaptInput.addEventListener('click', () => {
     searchBarAdapt.classList.add('search-bar-adapt__focus')
@@ -80,6 +61,12 @@ searchBarClose.addEventListener('click', () => {
     searchBarClose.style = 'display:none;'
 })}
 
+
+// Каталог комп версия 
+const catalog = doc.querySelector('.catalog')
+// Линк "Ещё"
+const more = doc.querySelector('#more')
+const catalogMenu = doc.querySelector('.catalog-menu')
 {// Выезжает каталог при клике.
     catalog.addEventListener('click', () => {
     catalogMenu.classList.toggle('active')
@@ -102,9 +89,6 @@ function getSubCategories (category) {
 }
 
 
-function clearMain() {
-    main.innerHTML = ''
-}
 
 
 for(let category of categories) {
@@ -127,38 +111,23 @@ for(let category of categories) {
     })
 }
 
-// Main 
+// -----------------------------------------------------Main---------------------------------------------------- 
 function renderMain() {
     renderSwiper()
     renderCompilation('Электроника', 'appliances')
     renderBanner(2)
 
 }
+let swiper = doc.querySelector('.swiper')
+const swiperSlidesImg = doc.querySelectorAll('.swiper-slide img') 
 function renderSwiper() {
-    // Свайпер
-        const divSwiper = createDOMElement('div', 'swiper')
-        main.append(divSwiper)
-
-        const swiperWrapper = createDOMElement('div', 'swiper-wrapper')
-        divSwiper.append(swiperWrapper)
 
         // Слайды
         for(let count = 0; count < 3; count++) {
-            let swiperSlide = createDOMElement('div', 'swiper-slide')
-            let slideImg = createDOMElement('img', 'slide-image')
-            slideImg.src = db.banners.src[count]
-            swiperSlide.append(slideImg)
-            swiperWrapper.append(swiperSlide)
+            swiperSlidesImg[count].src = db.banners.src[count]
         }
 
-        // Пагинация
-        const pagination = createDOMElement('div', 'swiper-pagination')
-        divSwiper.append(pagination)
-
-        // Кнопки
-        const buttonPrev = createDOMElement('div', 'swiper-button-prev')
-        const buttonNext = createDOMElement('div', 'swiper-button-next')
-        divSwiper.append(buttonPrev, buttonNext)
+        main.append(swiper)
 }
 function renderBanner(count) {
     // Баннер
@@ -187,7 +156,6 @@ function renderCompilation(compName,category) {
     // Добавление товаров
     for(let i = 0; i < 4; i++) {
         let dbProduct = db.products[category][i]
-        console.log(dbProduct)
         let product = createProduct(dbProduct)
         compContent.append(product)
     }
@@ -381,6 +349,8 @@ function renderProductPage (product) {
         
 
 }
+const date = new Date()
+const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
 function addReview(reviews,author,rating,text) {
 
         const review = createDOMElement('div', 'review')
@@ -416,16 +386,17 @@ function addReview(reviews,author,rating,text) {
 
 
 
-{// Анимация выпадения подсказок в поиске
-searchBarInput.addEventListener('focus', () => {
-    searchMenu.classList.toggle('hide')
-})
-searchBarInput.addEventListener('blur', () => {
-    searchMenu.classList.toggle('hide')
-})
-}
 
 
+// -----------------------------Account-modal---------------------------
+const logIn = doc.querySelector('.log-in')
+const accountModal = doc.querySelector('.account-modal')
+const registration = doc.querySelector('.registration')
+const signIn = doc.querySelector('.sign-in')
+const changeP = doc.querySelector('.change')
+const changeText = doc.querySelector('.change span')
+const changeSpan = doc.querySelector('#change')
+const closeModal = doc.querySelector('.close')
 {// Менять контент модалки входа-регистрации
 function changeRegistrationForm () {
 registration.classList.toggle('hide')
@@ -442,4 +413,309 @@ if(registration.className == 'registration form-content hide') {
 
 changeSpan.addEventListener('click', changeRegistrationForm)
 }
+function showHideModal () {
+    accountModal.classList.toggle('hide')
+}
+closeModal.addEventListener('click', () => {
+    showHideModal()
+})
+logIn.addEventListener('click', () => {
+    if(!currentAccount) showHideModal()
+    else renderAccountPage()
+})
+
+
+const regForm = doc.querySelector('.reg__form')
+const signInForm = doc.querySelector('.sign-in__form')
+
+const signInButton = doc.querySelector('.sign-in button')
+const regButton = doc.querySelector('.registration button')
+
+regForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    
+    let formInputs = regForm.children
+    let formData = {}
+    
+    
+    // Добавить ключи и значения в formData.
+    for(let input of formInputs) {
+        if(input.tagName == 'INPUT') {
+            formData[input.name] = input.value
+        }
+    }
+    
+    // Проверить существует ли юзер с таким логином
+    for(let user of db.users) {
+        console.log(user.username)
+        if(user.username == formInputs[2].value) {
+            formInputs[2].value = ''
+            return alert('Пользователь с таким логином уже существует!')
+        }
+    }
+    // Убрать слово "Войти"
+    logIn.classList.remove('log-in')
+    // Current account
+    // Убрать модальное окно
+    showHideModal()
+    // Отправить данные в ДБ
+    sendData(formData)
+    
+    currentAccount = formData
+    formData.email = '';
+    formData.tel = '';
+    
+    
+
+})
+signInForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    formInputs = signInForm.children
+
+    // Проверим совпадает ли логин с логинами в ДБ
+    
+    for(let user of db.users) {
+        if(user.username == formInputs[0].value) {
+            if(user.password == formInputs[1].value) {
+                alert(`Добро пожаловать, ${user.name}`)
+                showHideModal()
+
+                // Убрать слово "Войти"
+                logIn.classList.remove('log-in')
+                logIn.style.width = '20%'
+
+                return currentAccount = user
+            }else {
+
+                return alert('Указан не тот пароль. Подумай ещё :(')
+            }
+        }
+    }
+    signInForm.reset()
+    alert('Пользователь с таким логином не был найден!')
+
+})
+
+async function sendData(formData) {
+    console.log(formData)
+    formData.active = true;
+    formData.email = '';
+    formData.tel = '';
+    let response = await fetch('http://localhost:3000/users', {
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+         },
+        body: JSON.stringify(formData)
+    });
+    
+    let result = await response.json()
+    console.log(result)
+    return result
+    
+}
+
+
+function renderAccountPage() {
+    clearMain()
+
+    const accountPage = createDOMElement('div', 'account-page')
+    main.append(accountPage)
+
+    const accountNav = createDOMElement('div', 'account-nav')
+    accountPage.append(accountNav)
+        // account__settings
+        const accountSettings = createDOMElement('p', 'account-nav__settings')
+        accountSettings.textContent = 'Мои данные'
+        accountSettings.addEventListener('click', () => {
+            accountContent.textContent = ''
+            accountContent.append(getSettings())
+        })
+        accountNav.append(accountSettings)
+        // account__favorites
+        const accountFavorites = createDOMElement('p', 'account-nav__favorites')
+        accountFavorites.textContent = 'Избранное'
+        accountFavorites.addEventListener('click', renderFavorites()) 
+        accountNav.append(accountFavorites)
+        // account__bucket
+        const accountBucket = createDOMElement('p', 'account-nav__bucket')
+        accountBucket.textContent = 'Корзина'
+        // accountBucket.addEventListener('click', renderBucket())
+        accountNav.append(accountBucket)
+
+    const accountContent = createDOMElement('div', 'account-content')
+    accountPage.append(accountContent)
+
+    
+    
+    accountContent.append(getSettings())
+}
+function getSettings() {
+    const settings = createDOMElement('div', 'settings')
+        //account-heading 
+        const settingsHeading = createDOMElement('h4', 'settings-heading')
+        settingsHeading.textContent = 'Мои данные'
+        settings.append(settingsHeading)
+        // account-form
+        const settingsForm = createDOMElement('form', 'settings-form')
+        settings.append(settingsForm)
+            //top - bottom
+            const top = createDOMElement('div', 'settings__top row')
+            const middle = createDOMElement('div', 'settings__middle row')
+            const bottom = createDOMElement('div', 'settings__bottom row')
+            settingsForm.append(top)
+
+            const settingsSurname = createDOMElement('input', '')
+            settingsSurname.name = 'surname'
+            settingsSurname.placeholder = 'Фамилия'
+            settingsSurname.value = currentAccount.surname
+            const settingsName = createDOMElement('input', '')
+            settingsName.name = 'name'
+            settingsName.placeholder = 'Имя'
+            settingsName.value = currentAccount.name
+            top.append(settingsSurname, settingsName)
+
+            const hr1 = createDOMElement('hr', 'hr')
+            settingsForm.append(hr1)
+
+            const settingsEmail = createDOMElement('input', '')
+            settingsEmail.type = 'email'
+            settingsEmail.name = 'email'
+            settingsEmail.value = currentAccount.email
+            settingsEmail.placeholder = 'Email'
+            const settingsTel = createDOMElement('input', '')
+            settingsTel.name = 'tel'
+            settingsTel.placeholder = 'Номер телефона'
+            settingsTel.value = currentAccount.tel
+
+            
+            middle.append(settingsEmail, settingsTel)
+            settingsForm.append(middle)
+
+            const settingsSubmit = createDOMElement('button', 'settings-button settings__submit')
+            settingsSubmit.textContent = 'Сохранить'
+            settingsSubmit.type = 'submit'
+            // Сохранить сделанные изменения
+            settingsForm.addEventListener('submit', event => {
+                event.preventDefault()
+
+                let formData = {
+
+                };
+                formInputs = doc.querySelectorAll('.settings-form input')
+                for(let input of formInputs) {
+                    if(input.value) formData[input.name] = input.value
+                }
+                
+                fetch('http://localhost:3000/users/' + currentAccount.id, {
+                    method:'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                     },
+                    body: JSON.stringify(formData)
+                })
+                .then(res => res.json())
+                .then(res =>{ 
+                    console.log(res)
+                    alert('Успешно сохранено!')
+                })
+            })
+
+            // Кнопка - Выход из системы
+            const settingsExit = createDOMElement('button', 'settings-button settings__exit')
+            settingsExit.addEventListener('click', (event) => {
+                event.preventDefault()
+
+                
+                let accountPage = doc.querySelector('.account-page')
+                accountPage.remove()
+                renderMain()
+                exitAccount()
+                logIn.classList.add('log-in')
+                alert('Вы успешно вышли из системы!')
+            })
+            settingsExit.textContent = 'Выйти из системы'
+            
+            bottom.append(settingsSubmit, settingsExit)
+            settingsForm.append(bottom)
+
+
+
+        
+
+    
+    return settings
+
+
+}
+function renderFavorites() {
+    if(!currentAccount.favorites) {
+        for(let productId of currentAccount.favorites) {
+
+        }
+    }
+}
+function exitAccount() {
+    
+    fetch('http://localhost:3000/users/' + currentAccount.id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({active:false})
+
+        })    
+        .then(res => res.json())
+        .then(res => console.log(res))
+
+        currentAccount = undefined
+}
+
+
+
+// Загрузка страницы после принятия ДБ
+fetch('http://localhost:3000/db')
+    .then(res => res.json())
+    .then(res => {
+        db = res
+        console.log(db.users);
+        // Привязка к аккаунту
+        currentAccount = db.users.find(user => user.active == true)
+        renderMain()
+        // renderProductPage(db.products.electronics[0])
+
+        // Убрать слово "Войти" если аккаунт уже есть
+        if(currentAccount) logIn.classList.remove('log-in')
+        // Добавить swiper
+        
+        
+        const swiper = new Swiper('.swiper', {
+            // Optional parameters
+            direction: 'horizontal',
+            loop: true,
+          
+            // If we need pagination
+            pagination: {
+              el: '.swiper-pagination',
+            },
+          
+            // Navigation arrows
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+          
+            // And if we need scrollbar
+            scrollbar: {
+              el: '.swiper-scrollbar',
+            },
+        });
+
+        // Push все продукты из ДБ в один массив
+        for(let category in db.products) {
+            allProducts.push(category)
+        }
+        console.log(allProducts)
+    })
+
 

@@ -1,7 +1,7 @@
 
 @media (min-width:1300px) {
     /* Добавить названия кнопкам в nav */
-    .nav__button:nth-child(1)::after {
+    .log-in::after {
         content: 'Войти';
     }
     .nav__button:nth-child(2)::after {
@@ -21,7 +21,7 @@
         gap: 10px;
     }
     /* width++ */
-    .search-bar {
+    .search {
         width: 55%;
     }
     /* size++ */

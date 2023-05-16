@@ -257,12 +257,13 @@ button {
 .nav__button:hover {
     background-color: #f1f1f2;
 }
-.nav__button span {
-    font-size: 2vw;
+
+.favorites img{
+    width: 24px;
+    height: 24px;
 }
-.nav__button span {
-    font-size: 2vw;
-}
+
+
 
 
 .nav__bottom {
@@ -302,6 +303,7 @@ button {
     height: 100vh;
     background-color: white;
     padding: 10px;
+    z-index: 999;
 }
 .search-bar__top {
     display: flex;
@@ -359,7 +361,6 @@ button {
 }
 .swiper, .banner {
     width:100%;
-    aspect-ratio: 1.8;
 }
 .slide-image {
     width: 100%;
@@ -621,7 +622,7 @@ button {
     position: fixed;
     top: 100px;
     left: calc((100% - 500px) / 2);
-    
+    z-index: 999;
     
 }
 .form-content {
@@ -666,4 +667,87 @@ button {
 #change {
     cursor: pointer;
     color: blue;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+/* -----------------------Account page--------------------------- */
+.account-page {
+    display: flex;
+    gap: 10px;
+
+}
+.account-nav {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-right: 1px solid #8a8d93;
+    min-height: 100px;
+    padding:5px 15px;
+}
+.account-nav p {
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    color: #8a8d93;
+}
+.account-nav p:hover {
+    color: black;
+}
+.account-content {
+    width: 80%;
+    border: 1px solid #8a8d93;
+    padding: 15px;
+}
+.settings-heading {
+    font-size: 18px;
+    font-weight: 500;
+}
+.settings-form {
+    margin-top: 25px;
+}
+.row {
+    display: flex;
+    gap: 10px;
+    margin: 40px 0 40px;
+}
+.settings-form input {
+    width: 200px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #8a8d93;
+    outline: none;
+}
+.settings__bottom {
+    display: flex;
+    justify-content: space-between;
+
+}
+.settings__submit {
+    background-color: #7000ff;
+    color: white;
+    font-size: 16px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    width: 115px;
+}
+.settings__exit {
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    padding: 0 10px;
+}
+.settings__exit:hover {
+    background-color: #f1f1f2;
+    
 }

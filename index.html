@@ -139,7 +139,7 @@
 
                     <div class="search">
                         <div class="search-bar">
-                            <input type="text" name="search" autocomplete="off">
+                            <input type="search" name="search" autocomplete="off">
                             <button class="search__button">
                                 <span class="material-icons">search</span>
                             </button>
@@ -237,22 +237,40 @@
         </header>
         
         <main class="main">
-        
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img src="" alt="slide1"></div>
+                    <div class="swiper-slide"><img src="" alt="slide2"></div>
+                    <div class="swiper-slide"><img src="" alt="slide3"></div>
+                </div>
+                <!-- If we need pagination -->
+                 <div class="swiper-pagination"></div>
+  
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+  
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+            </div>
         </main>
     </div>
             
     
-    <div class="account-modal">
+    <div class="account-modal hide">
         <div class="registration form-content">
             <h3>
                 Зарегистрироваться
             </h3>
             
             <form action="#" class="reg__form">
-                <input type="text" name="name" placeholder="Имя" required>
-                <input type="text" name="surname" placeholder="Фамилия">
-                <input type="text" name="username" autocomplete="off" placeholder="Логин" required>
-                <input type="password" name="password" placeholder="Пароль" required>
+                <input type="text" name="name" placeholder="Имя" pattern="^[A-Za-zА-Яа-яЁё]+$" title="Только буквы латинского или русского алфавита" required>
+                <input type="text" name="surname" placeholder="Фамилия" pattern="^[A-Za-zА-Яа-яЁё]+$">
+                <input type="text" name="username" autocomplete="off" placeholder="Логин" pattern=".{3,9}" title="Цифры и латинские символы (от 3 до 9)" required>
+                <input type="password" name="password" placeholder="Пароль" pattern=".{3,9}" title="Цифры и латинские символы (от 3 до 9)" required>
                 <button type="submit" class="submit">Зарегистрироваться</button>
             </form>
 
@@ -265,15 +283,19 @@
             </h3>
 
             <form action="#" class="sign-in__form">
-                <input type="text" name="username" autocomplete="off" placeholder="Логин" required>
-                <input type="password" name="password" placeholder="Пароль" required>
+                <input type="text" name="username" autocomplete="off" placeholder="Логин" pattern=".{3,9}" required>
+                <input type="password" name="password" placeholder="Пароль" pattern=".{3,9}" title="Цифры и латинские символы (от 3 до 9)" required>
                 <button type="submit" class="submit">Войти</button>
+                
             </form>
         </div>
         <p class="change">
             <span>Уже есть аккаунт?</span>
             <span id="change">Войти</span>
         </p>
+        <div class="close">
+            <span class="material-icons">close</span>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="./script/script.js"></script>
