@@ -154,7 +154,7 @@ function renderCompilation(compName,category) {
     const compContent = createDOMElement('div', 'comp__content')
 
     // Добавление товаров
-    for(let i = 0; i < 4; i++) {
+    for(let i = 0; i < 9; i++) {
         let dbProduct = db.products[category][i]
         let product = createProduct(dbProduct)
         compContent.append(product)
@@ -165,11 +165,71 @@ function renderCompilation(compName,category) {
 function createProduct(dbProduct) {
     // Product-div
     const product = createDOMElement('div', 'product')
+
+    const productTop = createDOMElement('div', 'product-top')
+    product.append(productTop)
     
-    //product-image 
-    const productImage = createDOMElement('img', 'product__image')
-    productImage.src = dbProduct.imgURL
-    product.append(productImage)
+        //product-image 
+        const productImage = createDOMElement('img', 'product__image')
+        productImage.src = dbProduct.imgURL
+        productTop.append(productImage)
+
+        // product-basket
+        const productSetBasket = createDOMElement('div', 'product-basket')
+        productSetBasket.src = ''
+
+        // Зарегистрирован ли пользователь
+        if(currentAccount) {
+            // Есть ли уже этот продукт в избранном
+            if(currentAccount.basket.includes(dbProduct.id)) productSetBasket.textContent = '-'
+            else  productSetBasket.textContent = '+'
+        }else  productSetBasket.textContent = '+'
+
+        productSetBasket.addEventListener('click', (event) => {
+            //Не дать родительским элементам отзываться на клик
+            event.stopPropagation()
+
+            // Менять значки на кнопке после нажатия
+            if(productSetBasket.textContent == '+') {
+                alert('Продукт успешно добавлен в корзину')
+                productSetBasket.textContent = '-'
+            }
+            else {
+                alert('Продукт успешно удален из корзины')
+                productSetBasket.textContent = '+'
+            } 
+
+            addToUser(dbProduct, 'basket')
+        })
+        productTop.append(productSetBasket)
+
+        // product-favorite
+        const productSetFavorite = createDOMElement('span', 'material-icons product-favorite')
+        productSetFavorite.textContent = 'favorite_border'
+        // Зарегистрирован ли пользователь
+        if(currentAccount) {
+            // Есть ли уже этот продукт в избранном
+            if(currentAccount.favorites.includes(dbProduct.id)) productSetFavorite.textContent = 'favorite'
+            else  productSetFavorite.textContent = 'favorite_border'
+        }else  productSetFavorite.textContent = 'favorite_border'
+
+        productSetFavorite.addEventListener('click', (event) => {
+            //Не дать родительским элементам отзываться на клик
+            event.stopPropagation()
+
+            // Менять значки на кнопке после нажатия
+            if(productSetFavorite.textContent == 'favorite_border') {
+                alert('Продукт успешно добавлен в избранное')
+                productSetFavorite.textContent = 'favorite'
+            }
+            else {
+                alert('Продукт успешно удален из избранных')
+                productSetFavorite.textContent = 'favorite_border'
+            } 
+
+            addToUser(dbProduct, 'favorites')
+        })
+        productTop.append(productSetFavorite)
 
     // product-info 
     const productInfo = createDOMElement('div', 'product__info')
@@ -210,7 +270,32 @@ function createProduct(dbProduct) {
     return product
 }
 
+function addToUser(product, place) {
+    // Добавить id продукта если пользователь зарегистрирован
+    if(currentAccount) {
+        // Проверить чтобы значение еще не было в массиве
+        if(!currentAccount[place].includes(product.id)){
+            currentAccount[place].push(product.id)
+        }
+        //Убрать значение из массива если оно было
+        else {
+            currentAccount[place].splice(currentAccount[place].indexOf(product.id), 1);
+        }
 
+        // Отправить измененный массив
+        fetch('http://localhost:3000/users/' + currentAccount.id, {
+                method:'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                 },
+                body: JSON.stringify({[place]:currentAccount[place]})
+            })
+            .then(res => res.json())
+            .then(res => console.log(res))
+    }else {
+        showHideModal()
+    }
+}
 // Product page
 
 function renderProductPage (product) {
@@ -310,13 +395,56 @@ function renderProductPage (product) {
                 // product-page__actions
                 const productPageActions = createDOMElement('div', 'product-page__actions')
                 productPageRight.append(productPageActions)
-                    //product-page__bucket
-                    const productPageBucket = createDOMElement('button', 'product-page__bucket')
-                    productPageBucket.textContent = 'Добавить в корзину'
-                    productPageActions.append(productPageBucket)
+                    //product-page__basket
+                    const productPageBasket = createDOMElement('button', 'product-page__basket')
+
+                    // textContent
+                    if(currentAccount) {
+                        if(currentAccount.basket.includes(product.id)) {
+                            productPageBasket.textContent = 'Убрать из корзины'
+                        }else {
+                            productPageBasket.textContent = 'Добавить в корзину'
+                        }
+                    }else {
+                        productPageBasket.textContent = 'Добавить в корзину'
+                    }
+                    // click
+                    productPageBasket.addEventListener('click', () => {
+
+                        if(productPageBasket.textContent == 'Убрать из корзины') {
+                            alert('Успешно удаленно из корзины')
+                            productPageBasket.textContent = 'Добавить в корзину'
+                        }else {
+                            alert('Успешно добавлено в корзину')
+                            productPageBasket.textContent = 'Убрать из корзины'
+                        }
+                        addToUser(product, 'basket')
+                    })
+                    productPageActions.append(productPageBasket)
+
                     //product-page__favorite
                     const productPageFavorite = createDOMElement('button', 'product-page__favorite')
-                    productPageFavorite.textContent = 'Добавить в избранное'
+
+                    if(currentAccount) {
+                        if(currentAccount.favorites.includes(product.id)) {
+                            productPageFavorite.textContent = 'Убрать из избранных'
+                        }else {
+                            productPageFavorite.textContent = 'Добавить в избранное'
+                        }
+                    }else {
+                        productPageFavorite.textContent = 'Добавить в избранное'
+                    }
+                    productPageFavorite.addEventListener('click', () => {
+
+                        if(productPageFavorite.textContent == 'Убрать из избранных') {
+                            alert('Успешно удаленно из избранных')
+                            productPageFavorite.textContent = 'Добавить в избранное'
+                        }else {
+                            alert('Успешно удаленно в избранное')
+                            productPageFavorite.textContent = 'Убрать из избранных'
+                        }
+                        addToUser(product, 'favorites')
+                    })
                     productPageActions.append(productPageFavorite)
                 
                 //product-page__description
@@ -484,9 +612,21 @@ signInForm.addEventListener('submit', (event) => {
                 logIn.classList.remove('log-in')
                 logIn.style.width = '20%'
 
-                return currentAccount = user
-            }else {
+                currentAccount = user
 
+                // Сменить active в ДБ
+                fetch('http://localhost:3000/users/' + currentAccount.id, {
+                    method:'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                     },
+                    body: JSON.stringify({active:true})
+                })
+                .then(res => res.json())
+                .then(res => console.log(res))
+
+                return
+            }else {
                 return alert('Указан не тот пароль. Подумай ещё :(')
             }
         }
@@ -501,6 +641,8 @@ async function sendData(formData) {
     formData.active = true;
     formData.email = '';
     formData.tel = '';
+    formData.basket = [];
+    formData.favorites = [];
     let response = await fetch('http://localhost:3000/users', {
         method:'POST',
         headers: {
@@ -535,20 +677,26 @@ function renderAccountPage() {
         // account__favorites
         const accountFavorites = createDOMElement('p', 'account-nav__favorites')
         accountFavorites.textContent = 'Избранное'
-        accountFavorites.addEventListener('click', renderFavorites()) 
+        accountFavorites.addEventListener('click', () => {
+            accountContent.textContent = ''
+            accountContent.append(getFavorites())
+        }) 
         accountNav.append(accountFavorites)
-        // account__bucket
-        const accountBucket = createDOMElement('p', 'account-nav__bucket')
-        accountBucket.textContent = 'Корзина'
-        // accountBucket.addEventListener('click', renderBucket())
-        accountNav.append(accountBucket)
+        // account__basket
+        const accountBasket = createDOMElement('p', 'account-nav__bucket')
+        accountBasket.textContent = 'Корзина'
+        accountBasket.addEventListener('click', () => {
+            accountContent.textContent = ''
+            accountContent.append(getBasket())
+        })
+        accountNav.append(accountBasket)
 
     const accountContent = createDOMElement('div', 'account-content')
     accountPage.append(accountContent)
 
     
     
-    accountContent.append(getSettings())
+    accountContent.append(getFavorites())
 }
 function getSettings() {
     const settings = createDOMElement('div', 'settings')
@@ -648,12 +796,20 @@ function getSettings() {
 
 
 }
-function renderFavorites() {
-    if(!currentAccount.favorites) {
+function getFavorites() {
+    const accountFavorites = createDOMElement('div', 'account-favorites')
+    
+    if(currentAccount.favorites[0]) {
+        console.log(currentAccount.favorites);
         for(let productId of currentAccount.favorites) {
-
+            let product = createProduct(allProducts[productId - 1])
+            console.log(product)
+            accountFavorites.append(product)
         }
+    }else {
+        accountFavorites.append('Ничего не нашлось')
     }
+    return accountFavorites
 }
 function exitAccount() {
     
@@ -670,7 +826,21 @@ function exitAccount() {
 
         currentAccount = undefined
 }
-
+function getBasket() {
+    const accountBasket = createDOMElement('div', 'account-basket')
+    
+    if(currentAccount.basket[0]) {
+        console.log(currentAccount.basket);
+        for(let productId of currentAccount.basket) {
+            let product = createProduct(allProducts[productId - 1])
+            console.log(product)
+            accountBasket.append(product)
+        }
+    }else {
+        accountBasket.append('Ничего не нашлось')
+    }
+    return accountBasket
+}
 
 
 // Загрузка страницы после принятия ДБ
@@ -684,11 +854,16 @@ fetch('http://localhost:3000/db')
         renderMain()
         // renderProductPage(db.products.electronics[0])
 
+        
+
+        // Добавить все продукты из ДБ в один массив
+        allProducts = Object.values(db.products)
+        allProducts = allProducts.flat(2)
+        console.log(allProducts)
+
         // Убрать слово "Войти" если аккаунт уже есть
         if(currentAccount) logIn.classList.remove('log-in')
         // Добавить swiper
-        
-        
         const swiper = new Swiper('.swiper', {
             // Optional parameters
             direction: 'horizontal',
@@ -710,12 +885,4 @@ fetch('http://localhost:3000/db')
               el: '.swiper-scrollbar',
             },
         });
-
-        // Push все продукты из ДБ в один массив
-        for(let category in db.products) {
-            allProducts.push(category)
-        }
-        console.log(allProducts)
     })
-
-
