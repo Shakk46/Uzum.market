@@ -74,18 +74,23 @@ button {
 
 /* Бургер-меню */
 .burger-menu {
-    display: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     background-color: rgb(244 245 245);
+    z-index: 999;
+    background-color:#f1f1f2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 10px 40px;
+    min-height: 100vh;
 }
 .burger-menu div {
     background-color: white;
 }
-.menu__close {
-    height: 50px;
+.menu-top {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -95,13 +100,47 @@ button {
     top: 0;
     left: 0;
 }
-.menu__close span:nth-child(2) {
+.burger-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-size: 14px;
 }
-.menu__catalog {
-
+.burger-profile button {
+    
+    border-radius: 5px;
+    background-color: white;
 }
 
+.menu-catalog {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.menu-category{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f1f1f2;
+    height: 40px;
+    flex-shrink: 0;
+}
+.hide-catalog {
+    height: 65px;
+    overflow: hidden;
+}
+.menu-actions {
+    padding:15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.menu-actions div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
 
 .logo {
@@ -740,7 +779,7 @@ button {
     border: 1px solid #8a8d93;
     padding: 15px;
 }
-.settings-heading {
+.account-heading {
     font-size: 18px;
     font-weight: 500;
 }
@@ -787,13 +826,16 @@ button {
     background-color: #f1f1f2;
     
 }
-.account-favorites, .account-basket {
+.favorites-products, .basket-products {
     display: grid;
     grid-template-columns: repeat(4, 23.5%);
     gap: 2%;
 }
+.account-heading {
+    margin-bottom: 15px;
+}
 .account-page .product {
-    max-height: 350px;
+    min-height: 350px;
 }
 .account-page .product-top {
     height: 250px;
@@ -801,6 +843,120 @@ button {
 .account-page .product__name {
     font-size: 12px;
 }
-/* .account-favorites .product__price {
-    margin-top: 10px;
-} */
+
+
+
+/* -----------------------------SEARCH PAGE ------------------------------ */
+.search-page {
+    width: 100%;
+}
+.search-page__nav {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.search-page__nav span {
+    font-size: 12px;
+    cursor: pointer;
+    color: #8a8d93;
+}
+.search-page__nav span:hover {
+    color:black;
+}
+.search-page__nav span:after {
+    content:' / ';
+    color:#8a8d93
+}
+.nav-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+/* Адаптив */
+.params-button {
+    height: 40px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    display: none;
+}
+.params-menu {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+
+}
+.params-button .material-icons {
+    font-size: 16px;
+}
+.params-button .material-icons:after {
+    content: '';
+}
+.search-page__category {
+    margin-top: 45px;
+    font-weight: normal;
+}
+.search-page__content {
+    display: flex;
+    gap: 30px;
+    padding: 15px;
+}
+.params {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.search-page h4 {
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+.search-page .subcategories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 10px;
+}
+.categories__subcategory {
+    width: fit-content;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #8a8d93;
+}
+.categories__subcategory:hover {
+    background-color: #f1f1f2;
+}
+.categories__subcategory:nth-child(1) span{
+    font-size: 12px;
+}
+.price {
+
+}
+.price input {
+    display: inline;
+    width: 45%;
+    height: 40px;
+    padding: 5px;
+    outline: none;
+}
+.min {
+    margin-right: 15px;
+}
+.search-page .products {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+}
+.filter-confirm {
+    width: 150px;
+    height: 40px;
+    background-color: #7000ff;
+    color: white;
+    margin: 0 auto;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}

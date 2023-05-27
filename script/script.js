@@ -32,19 +32,105 @@ const catalogSub = doc.querySelector('.catalog__subcategories')
 
 // ---------------------------------------------HEADER-------------------------------------------------
 
+//------------------Burger--------------------
+
+const burgerButton = doc.querySelector('.burger')
+const burgerMenu = doc.querySelector('.burger-menu')
+const burgerClose = doc.querySelector('.menu__close')
+burgerButton.addEventListener('click', () => {
+    burgerMenu.classList.remove('hide')
+    main.style = 'display:none;'
+})
+burgerClose.addEventListener('click', () => {
+    burgerMenu.classList.add('hide')
+    main.style = 'dispaly:block;'
+})
+
+const burgerProfile = doc.querySelector('.burger-profile')
+burgerProfile.onclick = () => {
+    if(currentAccount) {
+        burgerMenu.classList.add('hide')
+        main.style.display = 'block'
+        renderAccountPage()
+    }else {
+        burgerMenu.classList.add('hide')
+        main.style.display = 'block'
+        showHideModal()
+    }
+}
+
+const burgerCatalog = doc.querySelector('.menu-catalog')
+const burgerCatalogButton = doc.querySelector('.menu-catalog__button')
+burgerCatalogButton.onclick = () => {
+    let burgerArrow = burgerCatalogButton.children[2]
+    if(burgerArrow.textContent == 'expand_more') {
+        burgerArrow.textContent = 'expand_less'
+    }
+    else if(burgerArrow.textContent == 'expand_less') {
+        burgerArrow.textContent = 'expand_more'
+    }else {
+        burgerArrow.textContent = 'expand_less'
+    }
+    burgerCatalog.classList.toggle('hide-catalog')
+}
+
+const burgerCategories = doc.querySelectorAll('.menu-category')
+for(let i = 1; i <= 10; i++) {
+    burgerCategories[i].onclick = () => {
+        renderSearchPage(burgerCategories[i].id)
+        burgerMenu.classList.add('hide')
+        main.style.display = 'block'
+        console.log('worked')
+    }
+}
 
 
-//search-bar 
+//search-bar
+const searchBar = doc.querySelector('.search-bar')
 const searchBarInput = doc.querySelector('.search-bar input')
 const searchMenu = doc.querySelector('.search-menu')
 {// Анимация выпадения подсказок в поиске
 searchBarInput.addEventListener('focus', () => {
-    searchMenu.classList.toggle('hide')
+    searchMenu.classList.remove('hide')
 })
-searchBarInput.addEventListener('blur', () => {
-    searchMenu.classList.toggle('hide')
-})
+main.onclick = () => {
+    searchMenu.classList.add('hide')
 }
+
+}
+
+
+
+let searchBarSuggestion = doc.querySelector('.suggestion')
+
+
+// Добавлять подсказки.
+searchBarInput.addEventListener('input', () => {
+    // Обнуляем после каждого ввода
+    searchMenu.textContent = ''
+    // Создаём Regex
+    let regex = new RegExp(searchBarInput.value, 'gi')
+    
+    // Получаем совпадения
+    for(let product of allProducts) {
+        if(product.name.match(regex)) {
+            if(searchMenu.children.length < 5) {
+                let newSuggestion = searchBarSuggestion.cloneNode(true)
+                newSuggestion.children[1].textContent = product.name
+                newSuggestion.id = product.id
+                newSuggestion.addEventListener('click', () => {
+                    clearMain()
+                    renderProductPage(allProducts[newSuggestion.id])
+                    
+                    searchMenu.classList.add('hide')
+                })
+                searchMenu.append(newSuggestion)
+            }
+            
+        }
+    }
+})
+
 
 // Адаптивный search-bar
 const searchBarAdapt = doc.querySelector('.search-bar-adapt')
@@ -88,9 +174,16 @@ function getSubCategories (category) {
     return subCategories
 }
 
+const navLinks = doc.querySelectorAll('.nav__link')
+for(let link of navLinks) {
+    link.addEventListener('click', () => {
+        renderSearchPage(link.id)
+    })
+   
+}
 
 
-
+// Добавление названий подкатегорий в каталоге
 for(let category of categories) {
     category.addEventListener('click', () => {
         catalogSub.innerHTML = ''
@@ -98,6 +191,10 @@ for(let category of categories) {
         // Добавить название категории
         const subCategoryName = createDOMElement('h2', 'category__name')
         subCategoryName.textContent = category.children[1].textContent
+        subCategoryName.onclick = () => {
+            renderSearchPage(category.id)
+            catalogMenu.classList.toggle('active')
+        }
         catalogSub.append(subCategoryName)
 
         // Добавить названия подкатегорий
@@ -105,6 +202,10 @@ for(let category of categories) {
         for(let i = 0; i < subcategories.length; i++) {
             let subcategory = createDOMElement('p', 'subcategory')
             subcategory.textContent = subcategories[i]
+            subcategory.onclick = () => {
+                renderSearchPage(category.id, subcategory.textContent)
+                catalogMenu.classList.toggle('active')
+            }
             catalogSub.append(subcategory)
         }
 
@@ -113,6 +214,30 @@ for(let category of categories) {
 
 // -----------------------------------------------------Main---------------------------------------------------- 
 function renderMain() {
+    clearMain()
+
+    // Добавить swiper
+    const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+  
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  
+    // And if we need scrollbar
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+    });   
     renderSwiper()
     renderCompilation('Электроника', 'appliances')
     renderBanner(2)
@@ -547,6 +672,7 @@ function showHideModal () {
 closeModal.addEventListener('click', () => {
     showHideModal()
 })
+// Кнопка информации аккаунта или входа-регистрации
 logIn.addEventListener('click', () => {
     if(!currentAccount) showHideModal()
     else renderAccountPage()
@@ -559,6 +685,7 @@ const signInForm = doc.querySelector('.sign-in__form')
 const signInButton = doc.querySelector('.sign-in button')
 const regButton = doc.querySelector('.registration button')
 
+// При регистрации
 regForm.addEventListener('submit', async (event) => {
     event.preventDefault()
     
@@ -596,6 +723,7 @@ regForm.addEventListener('submit', async (event) => {
     
 
 })
+// При входе
 signInForm.addEventListener('submit', (event) => {
     event.preventDefault()
     formInputs = signInForm.children
@@ -658,7 +786,7 @@ async function sendData(formData) {
 }
 
 
-function renderAccountPage() {
+function renderAccountPage(getPage = getSettings) {
     clearMain()
 
     const accountPage = createDOMElement('div', 'account-page')
@@ -666,7 +794,7 @@ function renderAccountPage() {
 
     const accountNav = createDOMElement('div', 'account-nav')
     accountPage.append(accountNav)
-        // account__settings
+        // кнопка настроек аккаунта
         const accountSettings = createDOMElement('p', 'account-nav__settings')
         accountSettings.textContent = 'Мои данные'
         accountSettings.addEventListener('click', () => {
@@ -674,7 +802,7 @@ function renderAccountPage() {
             accountContent.append(getSettings())
         })
         accountNav.append(accountSettings)
-        // account__favorites
+        // кнопка избранных
         const accountFavorites = createDOMElement('p', 'account-nav__favorites')
         accountFavorites.textContent = 'Избранное'
         accountFavorites.addEventListener('click', () => {
@@ -682,7 +810,7 @@ function renderAccountPage() {
             accountContent.append(getFavorites())
         }) 
         accountNav.append(accountFavorites)
-        // account__basket
+        // кнопка корзины
         const accountBasket = createDOMElement('p', 'account-nav__bucket')
         accountBasket.textContent = 'Корзина'
         accountBasket.addEventListener('click', () => {
@@ -696,12 +824,12 @@ function renderAccountPage() {
 
     
     
-    accountContent.append(getFavorites())
+    accountContent.append(getPage())
 }
 function getSettings() {
     const settings = createDOMElement('div', 'settings')
-        //account-heading 
-        const settingsHeading = createDOMElement('h4', 'settings-heading')
+        //settings-heading 
+        const settingsHeading = createDOMElement('h4', 'account-heading')
         settingsHeading.textContent = 'Мои данные'
         settings.append(settingsHeading)
         // account-form
@@ -798,16 +926,22 @@ function getSettings() {
 }
 function getFavorites() {
     const accountFavorites = createDOMElement('div', 'account-favorites')
+        //favorites-heading 
+        const favoritesHeading = createDOMElement('h4', 'account-heading')
+        favoritesHeading.textContent = 'Избранное'
+        accountFavorites.append(favoritesHeading)
+
+        //favorites-products
+        const favoritesProducts = createDOMElement('div', 'favorites-products')
+        accountFavorites.append(favoritesProducts)
     
     if(currentAccount.favorites[0]) {
-        console.log(currentAccount.favorites);
         for(let productId of currentAccount.favorites) {
             let product = createProduct(allProducts[productId - 1])
-            console.log(product)
-            accountFavorites.append(product)
+            favoritesProducts.append(product)
         }
     }else {
-        accountFavorites.append('Ничего не нашлось')
+        accountFavorites.append('Ничего не нашлось :(')
     }
     return accountFavorites
 }
@@ -828,61 +962,336 @@ function exitAccount() {
 }
 function getBasket() {
     const accountBasket = createDOMElement('div', 'account-basket')
+        //basket-heading 
+        const basketHeading = createDOMElement('h4', 'account-heading')
+        basketHeading.textContent = 'Корзина'
+        accountBasket.append(basketHeading)
+
+        //basket-products
+        const basketProducts = createDOMElement('div', 'basket-products')
+        accountBasket.append(basketProducts)
     
     if(currentAccount.basket[0]) {
-        console.log(currentAccount.basket);
+        // Добавить продукты из массива по id товара
         for(let productId of currentAccount.basket) {
             let product = createProduct(allProducts[productId - 1])
-            console.log(product)
-            accountBasket.append(product)
+            basketProducts.append(product)
         }
     }else {
-        accountBasket.append('Ничего не нашлось')
+        accountBasket.append('Ничего не нашлось :(')
     }
     return accountBasket
 }
 
+// Кнопки корзина и избранное в header
+const basketButton = doc.querySelectorAll('.basket')
+const favoritesButton = doc.querySelectorAll('.favorites')
+
+for(let button of basketButton) {
+    // На клик показываем избранное и корзину
+    button.onclick = () => {
+        if(currentAccount) {
+            burgerMenu.classList.add('hide')
+            main.style.display = 'block'
+            renderAccountPage(getBasket)
+        }else {
+            burgerMenu.classList.add('hide')
+            main.style.display = 'block'
+            showHideModal()
+        }
+    }
+}
+for(let button of favoritesButton) {
+    button.onclick = () => {
+        if(currentAccount) {
+            burgerMenu.classList.add('hide')
+            main.style.display = 'block'
+            renderAccountPage(getFavorites)
+        }else {
+            burgerMenu.classList.add('hide')
+            main.style.display = 'block'
+            showHideModal()
+        }
+    }
+}
+
+
+function renderSearchPage(category, subcategory = false) {
+    clearMain()
+
+    // Сохраним ссылку на текущую категорию
+    let currentCategory = category
+    let currentSubcategory = subcategory
+
+    const searchPage = createDOMElement('div', 'search-page')
+    main.append(searchPage)
+        // search-page__nav
+        const searchPageNav = createDOMElement('div', 'search-page__nav')
+        searchPage.append(searchPageNav)
+            const home = createDOMElement('span', '')
+            home.textContent = 'Главная'
+            home.addEventListener('click', renderMain)
+            const navCategory = createDOMElement('span', '')
+            navCategory.textContent = 'Все категории'
+            navCategory.addEventListener('click', () => {
+                renderSearchPage(allProducts)
+            })
+                // bottom
+                const navBottom = createDOMElement('div', 'nav-bottom')
+                    
+            searchPageNav.append(home,navCategory, navBottom)
+
+            const currentCategoryName = createDOMElement('h2', 'search-page__category')
+            navBottom.append(currentCategoryName)
+    
+        const searchPageContent = createDOMElement('div', 'search-page__content')
+        searchPage.append(searchPageContent)
+            const searchPageParams = createDOMElement('div', 'params')
+            searchPageContent.append(searchPageParams)
+                // Категории слева
+                const searchPageCategories = createDOMElement('div', 'categories')
+                searchPageParams.append(searchPageCategories)
+                    // Заглавие
+                    const h4 = createDOMElement('h4', '')
+                    h4.textContent = 'Категории'
+                    searchPageCategories.append(h4)
+                    // Подкатегории
+                    const searchPageSubcategories = createDOMElement('div', 'subcategories')
+                    searchPageCategories.append(searchPageSubcategories)
+                       
+                    // Цена
+                    const price = createDOMElement('div', 'price')
+                    searchPageParams.append(price)
+                        // Заглавие
+                        const H4 = createDOMElement('h4', '')
+                        H4.textContent = 'Цена'
+                        price.append(H4)
+                        const minInput = createDOMElement('input', 'min')
+                        minInput.placeholder = 'От'
+                        minInput.value = '0'
+                        const maxInput = createDOMElement('input', 'max')
+                        maxInput.placeholder = 'До'
+                        maxInput.value = '9999999'
+                        price.append(minInput,maxInput)
+
+                    // Кнопка поиска
+                    const filterConfirm = createDOMElement('button', 'filter-confirm')
+                    filterConfirm.textContent = 'Искать'
+                    filterConfirm.addEventListener('click', () => {
+                        if(maxInput.value > minInput.value) {
+                            renderProducts(currentCategory, currentSubcategory)
+                        }else {
+                            alert('минимальная цена не может быть больше максимальной')
+                            minInput.value = 0
+                        }
+                        
+                    })
+                    searchPageParams.append(filterConfirm)
+                    
+            const searchPageProducts = createDOMElement('div', 'products')
+            searchPageContent.append(searchPageProducts)
+
+        // Менять контент страницы по категории
+        if(category == allProducts) {
+            currentCategoryName.textContent = 'Все категории'
+
+            searchPageSubcategories.textContent = ''
+            for(let category of categories) { // categories - это массив категорий из catalog
+                let subcategory = createDOMElement('div', 'categories__subcategory')
+                subcategory.textContent = category.children[1].textContent // Название категории
+                subcategory.id = category.id
+                
+                subcategory.addEventListener('click', () => {
+                    currentCategory = subcategory.id
+                    renderProducts(currentCategory)
+                    
+                    // Изменит название категории
+                    currentCategoryName.textContent = subcategory.textContent
+                    // Добавить название в nav 
+                    let span1 = createDOMElement('span', '')
+                    span1.textContent = currentCategoryName.textContent
+                    searchPageNav.append(span1)
+                    // Добавление подкатегорий
+                    searchPageSubcategories.textContent = ''
+
+                    // Кнопка назад
+                    const previousCategory = createDOMElement('div', 'categories__subcategory')
+                    searchPageSubcategories.append(previousCategory)
+                        const span = createDOMElement('span', 'material-icons')
+                        span.textContent = 'arrow_back_ios'
+                        previousCategory.append(span, 'Все категории')
+                        previousCategory.addEventListener('click', () => {
+                            console.log(category);
+                            renderSearchPage(allProducts)
+                        })
+                    
+                    for(let subcategoryName of getSubCategories(subcategory.id)) {
+                        let subCategory = createDOMElement('div', 'categories__subcategory')
+                        subCategory.textContent = subcategoryName
+                        searchPageSubcategories.append(subCategory)
+        
+                        subCategory.addEventListener('click', () => {
+                            currentSubcategory = subcategoryName
+                            renderProducts(currentCategory,subcategoryName)
+                        })
+                    }
+                })
+                searchPageSubcategories.append(subcategory)
+            }
+            
+            for(let productObject of allProducts) {
+                let product = createProduct(productObject)
+                searchPageProducts.append(product)
+            }
+        }else {
+            // Добавление подкатегорий 
+            const previousCategory = createDOMElement('div', 'categories__subcategory')
+            searchPageSubcategories.append(previousCategory)
+                const span = createDOMElement('span', 'material-icons')
+                span.textContent = 'arrow_back_ios'
+                previousCategory.append(span, 'Все категории')
+                previousCategory.addEventListener('click', () => {
+                    renderSearchPage(allProducts)
+                })
+
+            // Показ товаров
+            renderProducts(currentCategory, currentSubcategory)
+            
+
+            for(let subcategoryName of getSubCategories(currentCategory)) {
+                let subcategory = createDOMElement('div', 'categories__subcategory')
+                subcategory.textContent = subcategoryName
+                searchPageSubcategories.append(subcategory)
+
+                subcategory.addEventListener('click', () => {
+                    currentSubcategory = subcategoryName
+                    renderProducts(currentCategory, subcategoryName)
+                })
+            }
+            
+
+            
+
+            
+
+            if(category == 'electronics') {
+                currentCategoryName.textContent = 'Электроника'
+            }
+            else if(category == 'appliances') {
+                currentCategoryName.textContent = 'Бытовая техника'
+            }else {
+                console.log('none');
+            }
+            // добавить название категории в nav
+            const navSpan = createDOMElement('span', '')
+                navSpan.textContent = currentCategoryName.textContent
+                searchPageNav.append(navSpan)
+                navSpan.addEventListener('click', () => {
+                    renderSearchPage(category)
+                })
+        }
+        
+        // Адаптив
+        const paramsButton = createDOMElement('button', 'params-button')
+            // иконка на кнопке
+            const span = createDOMElement('span', 'material-icons')
+            span.textContent = 'settings'
+            paramsButton.append(span, 'фильтры')
+        navBottom.append(paramsButton)
+
+        const paramsMenu = createDOMElement('div', 'params-menu')
+        body.append(paramsMenu)
+
+        let windowWidth = window.innerWidth
+        console.log(windowWidth);
+        
+        // Получаем ширину экрана при изменении
+        window.addEventListener('resize', () => {
+            windowWidth = window.innerWidth
+            console.log(windowWidth);
+
+            if(windowWidth < 920) {
+                
+            }
+        })
+        
+      
+    function renderProducts(category, subcategory = false) {
+        // Очистим searchProducts
+        searchPageProducts.textContent = ''
+
+        // Достаём продукты
+        let products = getProducts(category,[+minInput.value, +maxInput.value], subcategory)
+        // Показываем их
+        for(let product of products) {
+            product = createProduct(product)
+            searchPageProducts.append(product)
+        }
+
+        
+    }
+    function getProducts(category, price, subcategory, searchRegexp) {
+        // Проверяем значения необязательных параметров
+        if(isNaN(price[0])) price = [0, 100000]
+
+        let filteredProducts = [];
+        // Достаём все продукты указаноой категории
+        let categoryProducts;
+        
+        if(category != allProducts) {
+            console.log(category, allProducts);
+            categoryProducts = db.products[category]
+        }else {
+            categoryProducts = allProducts
+        }
+        
+
+
+        
+        categoryProducts.forEach((product) => {
+            // Фильтруем по цене
+            if(product.price >= price[0] && product.price <= price[1]) filteredProducts.push(product)
+            
+        })
+
+        if(subcategory) {
+            // Фильтруем по подкатегории
+            for(let i = 0; i < filteredProducts.length; i++) {
+                let product = filteredProducts[i]
+                if(product.subCategory != subcategory) {
+                    filteredProducts.splice(i,1)
+                    i--
+                }
+            }
+        }
+
+
+        // Возвращаем продукты
+        return filteredProducts
+    }
+    
+}
 
 // Загрузка страницы после принятия ДБ
 fetch('http://localhost:3000/db')
     .then(res => res.json())
     .then(res => {
         db = res
-        console.log(db.users);
-        // Привязка к аккаунту
-        currentAccount = db.users.find(user => user.active == true)
-        renderMain()
-        // renderProductPage(db.products.electronics[0])
-
-        
-
         // Добавить все продукты из ДБ в один массив
         allProducts = Object.values(db.products)
         allProducts = allProducts.flat(2)
-        console.log(allProducts)
+        
+
+        
+        // Привязка к аккаунту
+        currentAccount = db.users.find(user => user.active == true)
+        // renderMain()
+        // renderProductPage(db.products.electronics[0])
+        renderSearchPage(allProducts)
+        
+
 
         // Убрать слово "Войти" если аккаунт уже есть
         if(currentAccount) logIn.classList.remove('log-in')
-        // Добавить swiper
-        const swiper = new Swiper('.swiper', {
-            // Optional parameters
-            direction: 'horizontal',
-            loop: true,
-          
-            // If we need pagination
-            pagination: {
-              el: '.swiper-pagination',
-            },
-          
-            // Navigation arrows
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-          
-            // And if we need scrollbar
-            scrollbar: {
-              el: '.swiper-scrollbar',
-            },
-        });
+        
     })

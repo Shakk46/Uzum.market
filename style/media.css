@@ -47,6 +47,9 @@
     .logo{
         margin-right: 10px;
     }
+    .search-page .products {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width:920px) {
@@ -87,11 +90,16 @@
         font-size: 5vw;
     }
 
-    /* Main */
     /* products */
     .comp__content {
         grid-template-columns: repeat(3,32%);
     }
+
+    /* Адаптив search-page */
+    .params-button {
+        display: flex;
+    }
+
 }
 @media (max-width:768px) {
     .comp .product {
