@@ -9,6 +9,10 @@ img {
     width: 100%;
     height: 100%;
 }
+a {
+    text-decoration: none;
+    color: initial;
+}
 .active {
     height: 500px !important;
 }
@@ -22,6 +26,9 @@ button {
     gap: 5px;
     padding: 5px;
     cursor: pointer;
+}
+input {
+    outline:none;
 }
 
 .container {
@@ -147,6 +154,7 @@ button {
     height: 32px;
     width: 17%;
     margin-right: 32px;
+    cursor: pointer;
 }
 
 .catalog {
@@ -447,6 +455,16 @@ button {
 .comp .product {
     height: 450px;
 }
+/* кнопка ещё */
+.comp__more {
+    height: 40px;
+    width: 150px;
+    background-color: #f1f1f2;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    margin: 0 auto;
+}
 .product {
     display: flex;
     flex-direction: column;
@@ -514,18 +532,19 @@ button {
 
 
 /* ----------------------------Product page-------------------------- */
-
+.product-page .search-page__nav {
+    border-bottom: none;
+} 
 .product-page__top {
     display: flex;
 
 }
 .product-page__left {
-    width: 50%;
+    width: 70%;
     margin-right: 10%;
 }
 .product-page__img {
-    width: 100%;
-    height: 40vw;
+    height: auto;
     position: sticky;
     top: 10px;
     left: 0px;
@@ -677,6 +696,11 @@ button {
     align-items: center;
     gap: 25px;
 }
+.review__rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 .review__author {
     font-size: 16px;
 }
@@ -686,6 +710,55 @@ button {
 }
 .review__text {
     margin-top: 10px;
+    line-break: anywhere;
+}
+
+/* блок написания отзыва */
+.write-review {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.write-text {
+    width: 60%;
+    height: 200px;
+    padding: 15px;
+    font-size: 16px;
+}
+.write-right {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 200px;
+    justify-content: space-between;
+}
+
+.write-rating {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.write-rating input {
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    padding: 10px;
+}
+.write-rating label {
+    color:#8a8d93;
+}
+.write-submit {
+    width: 150px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #7000ff;
+    color: white;
 }
 
 /* account-modal */
@@ -695,7 +768,7 @@ button {
     background-color: white;
     padding: 50px;
     position: fixed;
-    top: 100px;
+    top: calc((100% - 350px) / 2);
     left: calc((100% - 500px) / 2);
     z-index: 999;
     
@@ -828,7 +901,7 @@ button {
 }
 .favorites-products, .basket-products {
     display: grid;
-    grid-template-columns: repeat(4, 23.5%);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2%;
 }
 .account-heading {
@@ -882,9 +955,28 @@ button {
 .params-menu {
     width: 100%;
     height: 100vh;
-    position: fixed;
-    display: flex;
+    position: absolute;
+    top:0;
+    left: 0;
+    background-color: white;
+    display: none;
+    padding: 30px;
+}
+.params-menu .params {
+    width: 100%;
 
+}
+.params-menu .subcategories {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+.params-menu .categories__subcategory {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .params-button .material-icons {
     font-size: 16px;
@@ -959,4 +1051,71 @@ button {
     outline: none;
     border: none;
     border-radius: 5px;
+}
+.yakor {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    background-color: #7000ff;
+    position: fixed;
+    right: 10px;
+    bottom: -100px;
+    transition: 300ms;
+    cursor: pointer;
+}
+.footer {
+    margin-top: 30px;
+    display: flex;
+    gap: 15%;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: 200ms;
+}
+.opened {
+    height: auto !important;
+}
+.opened .column-heading {
+    color: #7000ff;
+    font-weight: bold;
+}
+.footer-column a {
+    color: #8a8d93;
+    text-decoration: none;
+
+}
+.download a {
+    display: block;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    min-width: 130px;
+    font-size: 14px;
+    gap: 5px;
+}
+.download img {
+    width: 24px;
+    height: 24px;
+}
+.download-content {
+    display: flex;
+}
+.socials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.socials-content {
+    display: flex;
+    gap: 10px;
 }

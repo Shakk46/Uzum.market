@@ -3,9 +3,13 @@ const doc = document
 const body = doc.body
 const header = doc.querySelector('.header')
 const main = doc.querySelector('.main')
+const footer = doc.querySelector('.footer')
 const arrow = createDOMElement('span', 'material-icons')
 arrow.textContent = 'navigate_next'
 let allProducts = [];
+let windowWidth = window.innerWidth
+console.log(windowWidth);
+const yakor = doc.querySelector('.yakor')
 
 // Current account
 let currentAccount;
@@ -19,18 +23,49 @@ function createDOMElement(type, className) {
 }
 function clearMain() {
     main.innerHTML = ''
+    window.scrollTo(0,0)
 }
-
+function addScript() {
+    const swiperScript = createDOMElement('script', '')
+    swiperScript.scr = 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js'
+    body.append(swiperScript)
+}
 
 
 const categories = doc.querySelectorAll('.category')
 const catalogSub = doc.querySelector('.catalog__subcategories')
 
 
-
+// get current window width 
+window.onresize = () => {
+    windowWidth = window.innerWidth
+}
 
 
 // ---------------------------------------------HEADER-------------------------------------------------
+
+// изменение лого при экране < 576px 
+const logo = doc.querySelector('.logo')
+if(windowWidth < 576) {
+    logo.src = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 346 113.06'%3e%3cdefs%3e%3cstyle%3e.cls-1%7bfill:%237000ff;%7d%3c/style%3e%3c/defs%3e%3cg id='Layer_2' data-name='Layer 2'%3e%3cg id='Layer_1-2' data-name='Layer 1'%3e%3cpath class='cls-1' d='M229.12,35.78c0,4.41-2.49,6.45-6.2,6.45s-6.11-2-6.11-6.45V21.23h-8V36.07c0,9.66,8.1,13.45,14.18,13.45s14.17-3.79,14.17-13.45V21.23h-8Z'/%3e%3cpolygon class='cls-1' points='202.04 27.98 202.04 21.23 176.04 21.23 176.04 27.98 191.43 27.98 175.42 42.26 175.42 49.01 203 49.01 203 42.26 186.06 42.26 202.04 27.98'/%3e%3cpath class='cls-1' d='M277.44,20.69c-5.06,0-8.88,2.06-10.78,5.2-1.92-3.14-6.11-5.2-10.47-5.2-8.54,0-12.95,5.46-12.95,12.18V49h8V34c0-3.22,1.7-6.05,5.58-6.05a5.6,5.6,0,0,1,5.91,5.94V49h8V33.89c0-3.22,1.89-5.94,5.74-5.94s5.69,2.83,5.69,6.05V49h8V32.87c0-6.72-4.13-12.18-12.73-12.18'/%3e%3cpath class='cls-1' d='M162.15,35.78c0,4.41-2.49,6.45-6.17,6.45s-6.14-2-6.14-6.45V21.23h-8V36.07c0,9.66,8.07,13.45,14.18,13.45s14.14-3.79,14.14-13.45V21.23h-8Z'/%3e%3cpath class='cls-1' d='M113.4,56.56A56.7,56.7,0,1,1,56.7,0a56.59,56.59,0,0,1,56.7,56.56M63.21,19.64q-3.19-.29-6.51-.28c-2.18,0-4.36.09-6.48.28V49.8h13Zm30,17.59a106.94,106.94,0,0,0-14.49-3.65V58.91c0,18.23-7.75,27.81-22,27.81s-22-9.58-22-27.81V33.58A106.2,106.2,0,0,0,20.2,37.23V59.05a36.52,36.52,0,0,0,73,0Z'/%3e%3cpath class='cls-1' d='M176,63.4c-5.06,0-8.88,2.06-10.78,5.17-1.92-3.11-6.11-5.17-10.47-5.17-8.57,0-13,5.43-13,12.15V91.69h8v-15c0-3.2,1.7-6,5.57-6a5.57,5.57,0,0,1,5.89,5.93V91.69h8V76.57c0-3.22,1.9-5.93,5.75-5.93s5.68,2.85,5.68,6v15h8V75.55c0-6.72-4.13-12.15-12.73-12.15'/%3e%3cpath class='cls-1' d='M225.39,81.94h0v-18h-7.92l.06,4.38c-1.73-2.57-4.76-4.92-10.13-4.92-9.25,0-14,7.18-14,14.39-.17,7.29,5.21,14.55,13.61,14.55,4.45,0,8.52-2,10.47-5.45a6.85,6.85,0,0,0,6.91,4.8H229V85h-1.27c-1.62,0-2.3-.6-2.3-3m-16.32,3.45c-4.56,0-7.95-3.14-7.95-7.55s3.39-7.43,7.95-7.43,8.09,3.08,8.09,7.43-3.39,7.55-8.09,7.55'/%3e%3cpath class='cls-1' d='M235.74,73.41V91.69h8V79.43a7.52,7.52,0,0,1,7.84-7.8h5.23V63.37h-3.93c-4.84,0-8.38,4.13-9.14,6.53v-6h-8Z'/%3e%3cpolygon class='cls-1' points='261.69 91.69 269.69 91.69 269.69 78.1 282.14 91.69 291.59 91.69 278.69 77.42 290.6 63.94 281.18 63.94 269.69 76.94 269.69 55.34 261.69 55.34 261.69 91.69'/%3e%3cpath class='cls-1' d='M300.57,80c0,3.06,1.59,6.14,6.71,6.14,4.69,0,5.37-2.83,5.37-2.83h8.8s-.82,9-14.17,9c-9.31,0-15.14-5.2-15.14-14.5S298,63.4,307.19,63.4s14.94,5.14,14.94,14.44A16.89,16.89,0,0,1,322,80Zm.12-4.89h12.9c0-2.26-1.3-5.48-6.4-5.48s-6.5,3.22-6.5,5.48'/%3e%3cpath class='cls-1' d='M341.05,84.73c-2.74,0-3.73-1.22-3.73-5.09V69.86H346V63.42h-8.68V57.88H333l-7.73,7.37v4.61h4.05V80.69c0,7.77,3.79,11,11.74,11H346v-7Z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e"
+}else {
+    logo.src = "data:image/svg+xml,%3csvg width='215' height='32' viewBox='0 0 215 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3cg clip-path='url(%23clip0_264_8440)'%3e %3cpath d='M184.63 9.9482H189.047L183.466 16.2628L189.509 22.9514H185.081L179.25 16.5839V22.9514H175.5V5.92307H179.25V16.0406L184.63 9.9482Z' fill='%237000FF'/%3e %3cpath d='M167.097 12.7422V9.94467H163.347V22.9479H167.097V17.2047C167.097 14.9787 168.713 13.55 170.769 13.55H173.221V9.66951H171.38C169.101 9.68009 167.453 11.6133 167.097 12.7422Z' fill='%237000FF'/%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M158.496 9.94467V18.383C158.496 19.5189 158.817 19.7976 159.576 19.7941H160.169V22.9479H158.02C157.307 22.9842 156.603 22.7825 156.017 22.3744C155.431 21.9663 154.998 21.375 154.785 20.6937C153.872 22.3235 151.963 23.2513 149.882 23.2513C145.945 23.2513 143.426 19.847 143.507 16.4322C143.507 13.0561 145.733 9.69067 150.069 9.69067C152.587 9.69067 154.006 10.7913 154.813 11.9943L154.785 9.94467H158.496ZM147.127 16.471C147.127 18.5276 148.732 19.9987 150.848 19.9987C153.05 19.9987 154.641 18.51 154.641 16.471C154.641 14.4319 153.05 12.9891 150.848 12.9891C148.718 12.9891 147.127 14.4143 147.127 16.471Z' fill='%237000FF'/%3e %3cpath d='M130.328 12.1178C131.217 10.6608 133.005 9.6942 135.376 9.6942C139.408 9.6942 141.341 12.2377 141.341 15.388V22.9408H137.591V15.9065C137.591 14.4214 136.73 13.0843 134.928 13.0843C133.125 13.0843 132.236 14.3543 132.236 15.8642V22.962H128.472V15.8748C128.472 14.3649 127.527 13.0949 125.713 13.0949C123.9 13.0949 123.103 14.4214 123.103 15.9171V22.9514H119.353V15.388C119.353 12.2377 121.406 9.6942 125.424 9.6942C127.463 9.6942 129.424 10.6608 130.328 12.1178Z' fill='%237000FF'/%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M196.818 9.6942C192.497 9.6942 189.763 12.1036 189.763 16.4604C189.763 20.8171 192.493 23.2548 196.853 23.2548C203.112 23.2548 203.496 19.0215 203.496 19.0215H199.376C199.376 19.0215 199.058 20.3444 196.857 20.3444C194.458 20.3444 193.717 18.9016 193.717 17.4728H203.736C203.785 17.1386 203.812 16.8016 203.817 16.4639C203.817 12.1036 201.073 9.6942 196.818 9.6942ZM193.77 15.1763C193.77 14.118 194.476 12.6081 196.818 12.6081C199.161 12.6081 199.813 14.118 199.813 15.1763H193.77Z' fill='%237000FF'/%3e %3cpath d='M215 9.70126V12.721L210.915 12.7316V17.3176C210.915 19.1309 211.395 19.6988 212.679 19.6988H215V22.9831H212.679C208.943 22.9831 207.179 21.4486 207.179 17.808V12.7351H205.285V10.5761L208.904 7.12249H210.929V9.70126H215Z' fill='%237000FF'/%3e %3cpath d='M103.623 9.68008C101.249 9.68008 99.4607 10.6467 98.5717 12.1177C97.6721 10.6467 95.7107 9.68008 93.6682 9.68008C89.6642 9.68008 87.597 12.2377 87.597 15.3879V22.9514H91.3505V15.9171C91.3505 14.4072 92.1442 13.0949 93.961 13.0949C95.7778 13.0949 96.7302 14.3649 96.7302 15.8748V22.962H100.48V15.8642C100.48 14.3543 101.369 13.0843 103.172 13.0843C104.975 13.0843 105.835 14.4072 105.835 15.9065V22.9408H109.585V15.3879C109.585 12.2377 107.652 9.68008 103.623 9.68008Z' fill='%237000FF'/%3e %3cpath d='M68.3003 9.93408V13.0985L60.8109 19.787H68.7483V22.9514H55.8263V19.787L63.3297 13.0985H56.1191V9.93408H68.3003Z' fill='%237000FF'/%3e %3cpath d='M78.0827 19.7729C79.8183 19.7729 80.9825 18.8169 80.9825 16.7532V9.94467H84.736V16.8943C84.736 21.4345 80.9401 23.1983 78.0933 23.1983C75.2464 23.1983 71.4541 21.4239 71.4541 16.8943V9.94467H75.2182V16.7532C75.2182 18.8169 76.347 19.7729 78.0827 19.7729Z' fill='%237000FF'/%3e %3cpath d='M46.7212 19.7729C48.4427 19.7729 49.6104 18.8169 49.6104 16.7532V9.94467H53.3604V16.8943C53.3604 21.4345 49.5575 23.1983 46.7353 23.1983C43.8708 23.1983 40.0926 21.4239 40.0926 16.8943V9.94467H43.8461V16.7532C43.8461 18.8169 44.9997 19.7729 46.7212 19.7729Z' fill='%237000FF'/%3e %3cpath d='M31.9896 16.0053C31.9889 19.1704 31.0498 22.2643 29.2912 24.8955C27.5326 27.5268 25.0334 29.5772 22.1098 30.7875C19.1861 31.9978 15.9693 32.3135 12.8663 31.6949C9.76321 31.0762 6.91327 29.5508 4.6769 27.3117C2.44053 25.0726 0.918195 22.2204 0.302449 19.1158C-0.313297 16.0111 0.00520068 12.7936 1.21766 9.87001C2.43012 6.94646 4.48208 4.44826 7.114 2.6914C9.74592 0.934529 12.8396 -0.00208978 16.0037 3.50108e-06C18.1047 -0.000924639 20.1854 0.412484 22.1266 1.21658C24.0679 2.02068 25.8316 3.1997 27.317 4.68621C28.8023 6.17271 29.9802 7.93754 30.7831 9.87977C31.5861 11.822 31.9985 13.9035 31.9966 16.0053H31.9896ZM17.8304 5.5597C17.2309 5.50326 16.6173 5.47856 15.9966 5.47856C15.3759 5.47856 14.7658 5.50326 14.1663 5.5597V14.0933H17.8304V5.5597ZM26.2942 10.5338C24.9588 10.0949 23.5942 9.7507 22.2104 9.5037V16.672C22.2104 21.8296 20.0239 24.5424 15.9931 24.5424C11.9622 24.5424 9.78282 21.8296 9.78282 16.672V9.5037C8.39801 9.75113 7.03224 10.0953 5.69554 10.5338V16.7108C5.67022 18.0799 5.9179 19.4402 6.42412 20.7124C6.93033 21.9845 7.68493 23.143 8.64382 24.1201C9.60271 25.0973 10.7467 25.8734 12.0088 26.4033C13.271 26.9331 14.6261 27.206 15.9949 27.206C17.3637 27.206 18.7187 26.9331 19.9809 26.4033C21.2431 25.8734 22.387 25.0973 23.3459 24.1201C24.3048 23.143 25.0594 21.9845 25.5656 20.7124C26.0718 19.4402 26.3195 18.0799 26.2942 16.7108V10.5338Z' fill='%237000FF'/%3e %3c/g%3e %3cdefs%3e %3cclipPath id='clip0_264_8440'%3e %3crect width='215' height='32' fill='white'/%3e %3c/clipPath%3e %3c/defs%3e %3c/svg%3e"
+}
+window.addEventListener('resize', () => {
+    windowWidth = window.innerWidth
+
+    if(windowWidth < 576) {
+        logo.src = "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 346 113.06'%3e%3cdefs%3e%3cstyle%3e.cls-1%7bfill:%237000ff;%7d%3c/style%3e%3c/defs%3e%3cg id='Layer_2' data-name='Layer 2'%3e%3cg id='Layer_1-2' data-name='Layer 1'%3e%3cpath class='cls-1' d='M229.12,35.78c0,4.41-2.49,6.45-6.2,6.45s-6.11-2-6.11-6.45V21.23h-8V36.07c0,9.66,8.1,13.45,14.18,13.45s14.17-3.79,14.17-13.45V21.23h-8Z'/%3e%3cpolygon class='cls-1' points='202.04 27.98 202.04 21.23 176.04 21.23 176.04 27.98 191.43 27.98 175.42 42.26 175.42 49.01 203 49.01 203 42.26 186.06 42.26 202.04 27.98'/%3e%3cpath class='cls-1' d='M277.44,20.69c-5.06,0-8.88,2.06-10.78,5.2-1.92-3.14-6.11-5.2-10.47-5.2-8.54,0-12.95,5.46-12.95,12.18V49h8V34c0-3.22,1.7-6.05,5.58-6.05a5.6,5.6,0,0,1,5.91,5.94V49h8V33.89c0-3.22,1.89-5.94,5.74-5.94s5.69,2.83,5.69,6.05V49h8V32.87c0-6.72-4.13-12.18-12.73-12.18'/%3e%3cpath class='cls-1' d='M162.15,35.78c0,4.41-2.49,6.45-6.17,6.45s-6.14-2-6.14-6.45V21.23h-8V36.07c0,9.66,8.07,13.45,14.18,13.45s14.14-3.79,14.14-13.45V21.23h-8Z'/%3e%3cpath class='cls-1' d='M113.4,56.56A56.7,56.7,0,1,1,56.7,0a56.59,56.59,0,0,1,56.7,56.56M63.21,19.64q-3.19-.29-6.51-.28c-2.18,0-4.36.09-6.48.28V49.8h13Zm30,17.59a106.94,106.94,0,0,0-14.49-3.65V58.91c0,18.23-7.75,27.81-22,27.81s-22-9.58-22-27.81V33.58A106.2,106.2,0,0,0,20.2,37.23V59.05a36.52,36.52,0,0,0,73,0Z'/%3e%3cpath class='cls-1' d='M176,63.4c-5.06,0-8.88,2.06-10.78,5.17-1.92-3.11-6.11-5.17-10.47-5.17-8.57,0-13,5.43-13,12.15V91.69h8v-15c0-3.2,1.7-6,5.57-6a5.57,5.57,0,0,1,5.89,5.93V91.69h8V76.57c0-3.22,1.9-5.93,5.75-5.93s5.68,2.85,5.68,6v15h8V75.55c0-6.72-4.13-12.15-12.73-12.15'/%3e%3cpath class='cls-1' d='M225.39,81.94h0v-18h-7.92l.06,4.38c-1.73-2.57-4.76-4.92-10.13-4.92-9.25,0-14,7.18-14,14.39-.17,7.29,5.21,14.55,13.61,14.55,4.45,0,8.52-2,10.47-5.45a6.85,6.85,0,0,0,6.91,4.8H229V85h-1.27c-1.62,0-2.3-.6-2.3-3m-16.32,3.45c-4.56,0-7.95-3.14-7.95-7.55s3.39-7.43,7.95-7.43,8.09,3.08,8.09,7.43-3.39,7.55-8.09,7.55'/%3e%3cpath class='cls-1' d='M235.74,73.41V91.69h8V79.43a7.52,7.52,0,0,1,7.84-7.8h5.23V63.37h-3.93c-4.84,0-8.38,4.13-9.14,6.53v-6h-8Z'/%3e%3cpolygon class='cls-1' points='261.69 91.69 269.69 91.69 269.69 78.1 282.14 91.69 291.59 91.69 278.69 77.42 290.6 63.94 281.18 63.94 269.69 76.94 269.69 55.34 261.69 55.34 261.69 91.69'/%3e%3cpath class='cls-1' d='M300.57,80c0,3.06,1.59,6.14,6.71,6.14,4.69,0,5.37-2.83,5.37-2.83h8.8s-.82,9-14.17,9c-9.31,0-15.14-5.2-15.14-14.5S298,63.4,307.19,63.4s14.94,5.14,14.94,14.44A16.89,16.89,0,0,1,322,80Zm.12-4.89h12.9c0-2.26-1.3-5.48-6.4-5.48s-6.5,3.22-6.5,5.48'/%3e%3cpath class='cls-1' d='M341.05,84.73c-2.74,0-3.73-1.22-3.73-5.09V69.86H346V63.42h-8.68V57.88H333l-7.73,7.37v4.61h4.05V80.69c0,7.77,3.79,11,11.74,11H346v-7Z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e"
+    }else {
+        logo.src = "data:image/svg+xml,%3csvg width='215' height='32' viewBox='0 0 215 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3e %3cg clip-path='url(%23clip0_264_8440)'%3e %3cpath d='M184.63 9.9482H189.047L183.466 16.2628L189.509 22.9514H185.081L179.25 16.5839V22.9514H175.5V5.92307H179.25V16.0406L184.63 9.9482Z' fill='%237000FF'/%3e %3cpath d='M167.097 12.7422V9.94467H163.347V22.9479H167.097V17.2047C167.097 14.9787 168.713 13.55 170.769 13.55H173.221V9.66951H171.38C169.101 9.68009 167.453 11.6133 167.097 12.7422Z' fill='%237000FF'/%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M158.496 9.94467V18.383C158.496 19.5189 158.817 19.7976 159.576 19.7941H160.169V22.9479H158.02C157.307 22.9842 156.603 22.7825 156.017 22.3744C155.431 21.9663 154.998 21.375 154.785 20.6937C153.872 22.3235 151.963 23.2513 149.882 23.2513C145.945 23.2513 143.426 19.847 143.507 16.4322C143.507 13.0561 145.733 9.69067 150.069 9.69067C152.587 9.69067 154.006 10.7913 154.813 11.9943L154.785 9.94467H158.496ZM147.127 16.471C147.127 18.5276 148.732 19.9987 150.848 19.9987C153.05 19.9987 154.641 18.51 154.641 16.471C154.641 14.4319 153.05 12.9891 150.848 12.9891C148.718 12.9891 147.127 14.4143 147.127 16.471Z' fill='%237000FF'/%3e %3cpath d='M130.328 12.1178C131.217 10.6608 133.005 9.6942 135.376 9.6942C139.408 9.6942 141.341 12.2377 141.341 15.388V22.9408H137.591V15.9065C137.591 14.4214 136.73 13.0843 134.928 13.0843C133.125 13.0843 132.236 14.3543 132.236 15.8642V22.962H128.472V15.8748C128.472 14.3649 127.527 13.0949 125.713 13.0949C123.9 13.0949 123.103 14.4214 123.103 15.9171V22.9514H119.353V15.388C119.353 12.2377 121.406 9.6942 125.424 9.6942C127.463 9.6942 129.424 10.6608 130.328 12.1178Z' fill='%237000FF'/%3e %3cpath fill-rule='evenodd' clip-rule='evenodd' d='M196.818 9.6942C192.497 9.6942 189.763 12.1036 189.763 16.4604C189.763 20.8171 192.493 23.2548 196.853 23.2548C203.112 23.2548 203.496 19.0215 203.496 19.0215H199.376C199.376 19.0215 199.058 20.3444 196.857 20.3444C194.458 20.3444 193.717 18.9016 193.717 17.4728H203.736C203.785 17.1386 203.812 16.8016 203.817 16.4639C203.817 12.1036 201.073 9.6942 196.818 9.6942ZM193.77 15.1763C193.77 14.118 194.476 12.6081 196.818 12.6081C199.161 12.6081 199.813 14.118 199.813 15.1763H193.77Z' fill='%237000FF'/%3e %3cpath d='M215 9.70126V12.721L210.915 12.7316V17.3176C210.915 19.1309 211.395 19.6988 212.679 19.6988H215V22.9831H212.679C208.943 22.9831 207.179 21.4486 207.179 17.808V12.7351H205.285V10.5761L208.904 7.12249H210.929V9.70126H215Z' fill='%237000FF'/%3e %3cpath d='M103.623 9.68008C101.249 9.68008 99.4607 10.6467 98.5717 12.1177C97.6721 10.6467 95.7107 9.68008 93.6682 9.68008C89.6642 9.68008 87.597 12.2377 87.597 15.3879V22.9514H91.3505V15.9171C91.3505 14.4072 92.1442 13.0949 93.961 13.0949C95.7778 13.0949 96.7302 14.3649 96.7302 15.8748V22.962H100.48V15.8642C100.48 14.3543 101.369 13.0843 103.172 13.0843C104.975 13.0843 105.835 14.4072 105.835 15.9065V22.9408H109.585V15.3879C109.585 12.2377 107.652 9.68008 103.623 9.68008Z' fill='%237000FF'/%3e %3cpath d='M68.3003 9.93408V13.0985L60.8109 19.787H68.7483V22.9514H55.8263V19.787L63.3297 13.0985H56.1191V9.93408H68.3003Z' fill='%237000FF'/%3e %3cpath d='M78.0827 19.7729C79.8183 19.7729 80.9825 18.8169 80.9825 16.7532V9.94467H84.736V16.8943C84.736 21.4345 80.9401 23.1983 78.0933 23.1983C75.2464 23.1983 71.4541 21.4239 71.4541 16.8943V9.94467H75.2182V16.7532C75.2182 18.8169 76.347 19.7729 78.0827 19.7729Z' fill='%237000FF'/%3e %3cpath d='M46.7212 19.7729C48.4427 19.7729 49.6104 18.8169 49.6104 16.7532V9.94467H53.3604V16.8943C53.3604 21.4345 49.5575 23.1983 46.7353 23.1983C43.8708 23.1983 40.0926 21.4239 40.0926 16.8943V9.94467H43.8461V16.7532C43.8461 18.8169 44.9997 19.7729 46.7212 19.7729Z' fill='%237000FF'/%3e %3cpath d='M31.9896 16.0053C31.9889 19.1704 31.0498 22.2643 29.2912 24.8955C27.5326 27.5268 25.0334 29.5772 22.1098 30.7875C19.1861 31.9978 15.9693 32.3135 12.8663 31.6949C9.76321 31.0762 6.91327 29.5508 4.6769 27.3117C2.44053 25.0726 0.918195 22.2204 0.302449 19.1158C-0.313297 16.0111 0.00520068 12.7936 1.21766 9.87001C2.43012 6.94646 4.48208 4.44826 7.114 2.6914C9.74592 0.934529 12.8396 -0.00208978 16.0037 3.50108e-06C18.1047 -0.000924639 20.1854 0.412484 22.1266 1.21658C24.0679 2.02068 25.8316 3.1997 27.317 4.68621C28.8023 6.17271 29.9802 7.93754 30.7831 9.87977C31.5861 11.822 31.9985 13.9035 31.9966 16.0053H31.9896ZM17.8304 5.5597C17.2309 5.50326 16.6173 5.47856 15.9966 5.47856C15.3759 5.47856 14.7658 5.50326 14.1663 5.5597V14.0933H17.8304V5.5597ZM26.2942 10.5338C24.9588 10.0949 23.5942 9.7507 22.2104 9.5037V16.672C22.2104 21.8296 20.0239 24.5424 15.9931 24.5424C11.9622 24.5424 9.78282 21.8296 9.78282 16.672V9.5037C8.39801 9.75113 7.03224 10.0953 5.69554 10.5338V16.7108C5.67022 18.0799 5.9179 19.4402 6.42412 20.7124C6.93033 21.9845 7.68493 23.143 8.64382 24.1201C9.60271 25.0973 10.7467 25.8734 12.0088 26.4033C13.271 26.9331 14.6261 27.206 15.9949 27.206C17.3637 27.206 18.7187 26.9331 19.9809 26.4033C21.2431 25.8734 22.387 25.0973 23.3459 24.1201C24.3048 23.143 25.0594 21.9845 25.5656 20.7124C26.0718 19.4402 26.3195 18.0799 26.2942 16.7108V10.5338Z' fill='%237000FF'/%3e %3c/g%3e %3cdefs%3e %3cclipPath id='clip0_264_8440'%3e %3crect width='215' height='32' fill='white'/%3e %3c/clipPath%3e %3c/defs%3e %3c/svg%3e"
+    }
+})
+
+// главная при клике на лого
+logo.onclick = () => {
+    renderMain()
+    console.log('lol')
+}
 
 //------------------Burger--------------------
 
@@ -40,10 +75,12 @@ const burgerClose = doc.querySelector('.menu__close')
 burgerButton.addEventListener('click', () => {
     burgerMenu.classList.remove('hide')
     main.style = 'display:none;'
+    footer.style = 'display:none;'
 })
 burgerClose.addEventListener('click', () => {
     burgerMenu.classList.add('hide')
     main.style = 'dispaly:block;'
+    footer.style = 'display:flex;'
 })
 
 const burgerProfile = doc.querySelector('.burger-profile')
@@ -51,10 +88,12 @@ burgerProfile.onclick = () => {
     if(currentAccount) {
         burgerMenu.classList.add('hide')
         main.style.display = 'block'
+        footer.style.display = 'flex'
         renderAccountPage()
     }else {
         burgerMenu.classList.add('hide')
         main.style.display = 'block'
+        footer.style.display = 'flex'
         showHideModal()
     }
 }
@@ -80,6 +119,7 @@ for(let i = 1; i <= 10; i++) {
         renderSearchPage(burgerCategories[i].id)
         burgerMenu.classList.add('hide')
         main.style.display = 'block'
+        footer.style.display = 'flex'
         console.log('worked')
     }
 }
@@ -88,6 +128,7 @@ for(let i = 1; i <= 10; i++) {
 //search-bar
 const searchBar = doc.querySelector('.search-bar')
 const searchBarInput = doc.querySelector('.search-bar input')
+const searchBarButton = doc.querySelector('.search__button')
 const searchMenu = doc.querySelector('.search-menu')
 {// Анимация выпадения подсказок в поиске
 searchBarInput.addEventListener('focus', () => {
@@ -97,6 +138,14 @@ main.onclick = () => {
     searchMenu.classList.add('hide')
 }
 
+}
+
+{// Поиск товаров при нажатии на кнопку поиска
+    searchBarButton.onclick = (event) => {
+        event.preventDefault()
+        console.log(searchBarInput.value);
+        renderSearchPage(allProducts, false, searchBarInput.value)
+    }
 }
 
 
@@ -120,7 +169,7 @@ searchBarInput.addEventListener('input', () => {
                 newSuggestion.id = product.id
                 newSuggestion.addEventListener('click', () => {
                     clearMain()
-                    renderProductPage(allProducts[newSuggestion.id])
+                    renderProductPage(allProducts[newSuggestion.id - 1])
                     
                     searchMenu.classList.add('hide')
                 })
@@ -146,6 +195,56 @@ searchBarClose.addEventListener('click', () => {
     searchBarAdapt.classList.remove('search-bar-adapt__focus')
     searchBarClose.style = 'display:none;'
 })}
+
+window.addEvent 
+
+let searchBarAdaptSuggestion = doc.querySelector('.request')
+const searchBarBottom = doc.querySelector('.search-bar__bottom')
+// Добавление подсказок
+searchBarAdaptInput.addEventListener('input', () => {
+    // Обнуляем после каждого ввода
+    let allReq = doc.querySelectorAll('.request')
+    allReq.forEach(request => {
+        request.remove()
+    })
+    // Создаём Regex
+    let regex = new RegExp(searchBarAdaptInput.value, 'gi')
+    
+    // Получаем совпадения
+    for(let product of allProducts) {
+        if(product.name.match(regex)) {
+            allReq = doc.querySelectorAll('.request')
+            console.log(allReq.length)
+            if(allReq.length < 5) {
+                let newSuggestion = searchBarAdaptSuggestion.cloneNode(true)
+                newSuggestion.children[1].textContent = product.name
+                newSuggestion.id = product.id
+                newSuggestion.addEventListener('click', () => {
+                    clearMain()
+                    renderProductPage(allProducts[newSuggestion.id])
+                    
+                    searchBarAdapt.classList.remove('search-bar-adapt__focus')
+                    searchBarClose.style = 'display:none;'
+                })
+                searchBarBottom.append(newSuggestion)
+            }
+            
+        }
+    }
+})
+
+// Искать при нажатии на enter 
+searchBarAdaptInput.addEventListener('keypress', (event) => {
+    
+    if(event.key === 'Enter') {
+        console.log('worked');
+
+        renderSearchPage(allProducts, false, searchBarAdaptInput.value)
+
+        searchBarAdapt.classList.remove('search-bar-adapt__focus')
+        searchBarClose.style.display = 'none'
+    } 
+})
 
 
 // Каталог комп версия 
@@ -216,37 +315,45 @@ for(let category of categories) {
 function renderMain() {
     clearMain()
 
+    renderSwiper()
+    renderCompilation('Электроника', 'electronics')
+    renderBanner(0)
+
+    
+    renderCompilation('Бытовая техника', 'appliances')
+    renderBanner(1)
+
+    renderCompilation('Обувь', 'shoes')
+    renderBanner(3)
+
+    renderCompilation('Одежда', 'clothes')
+
     // Добавить swiper
     const swiper = new Swiper('.swiper', {
-    // Optional parameters
-    direction: 'horizontal',
-    loop: true,
-  
-    // If we need pagination
-    pagination: {
-      el: '.swiper-pagination',
-    },
-  
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  
-    // And if we need scrollbar
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    },
-    });   
-    renderSwiper()
-    renderCompilation('Электроника', 'appliances')
-    renderBanner(2)
-
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+      
+        // If we need pagination
+        pagination: {
+          el: '.swiper-pagination',
+        },
+      
+        // Navigation arrows
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      
+        // And if we need scrollbar
+        scrollbar: {
+          el: '.swiper-scrollbar',
+        },
+        });
 }
 let swiper = doc.querySelector('.swiper')
-const swiperSlidesImg = doc.querySelectorAll('.swiper-slide img') 
+const swiperSlidesImg = doc.querySelectorAll('.swiper-slide img')
 function renderSwiper() {
-
         // Слайды
         for(let count = 0; count < 3; count++) {
             swiperSlidesImg[count].src = db.banners.src[count]
@@ -272,6 +379,10 @@ function renderCompilation(compName,category) {
     // Заголовок 
     const compHeading = createDOMElement('h3', 'comp__heading')
     compHeading.textContent = compName
+    console.log(category);
+    compHeading.onclick = () => {
+        renderSearchPage(category)
+    }     
     compHeading.append(arrow)
     comp.append(compHeading)
     
@@ -279,13 +390,35 @@ function renderCompilation(compName,category) {
     const compContent = createDOMElement('div', 'comp__content')
 
     // Добавление товаров
-    for(let i = 0; i < 9; i++) {
+    for(let i = 0; i < 5; i++) {
         let dbProduct = db.products[category][i]
         let product = createProduct(dbProduct)
         compContent.append(product)
     }
     comp.append(compContent)
 
+
+    // Кнопка 'ещё'
+    const compMore = createDOMElement('button', 'comp__more')
+    compMore.textContent = 'ещё'
+    compMore.onclick = () => {
+        // Если колво товаров равно 5 - добавить
+        if(compContent.children.length == 5) {
+            for(let i = 5; i < 10; i++) {
+                let dbProduct = db.products[category][i]
+                let product = createProduct(dbProduct)
+                compContent.append(product)
+            }
+            compMore.textContent = 'скрыть'
+        }else {
+            for(let i = 9; i > 4; i--) {
+                compContent.children[i].remove()
+            }
+            compMore.textContent = 'ещё'
+        }
+        
+    }
+    comp.append(compMore)
 }
 function createProduct(dbProduct) {
     // Product-div
@@ -314,17 +447,19 @@ function createProduct(dbProduct) {
             //Не дать родительским элементам отзываться на клик
             event.stopPropagation()
 
-            // Менять значки на кнопке после нажатия
-            if(productSetBasket.textContent == '+') {
-                alert('Продукт успешно добавлен в корзину')
-                productSetBasket.textContent = '-'
+            if(addToUser(dbProduct, 'basket')) {
+                // Менять значки на кнопке после нажатия
+                if(productSetBasket.textContent == '+') {
+                    alert('Продукт успешно добавлен в корзину')
+                    productSetBasket.textContent = '-'
+                }
+                else {
+                    alert('Продукт успешно удален из корзины')
+                    productSetBasket.textContent = '+'
+                } 
             }
-            else {
-                alert('Продукт успешно удален из корзины')
-                productSetBasket.textContent = '+'
-            } 
 
-            addToUser(dbProduct, 'basket')
+            
         })
         productTop.append(productSetBasket)
 
@@ -342,17 +477,19 @@ function createProduct(dbProduct) {
             //Не дать родительским элементам отзываться на клик
             event.stopPropagation()
 
-            // Менять значки на кнопке после нажатия
-            if(productSetFavorite.textContent == 'favorite_border') {
-                alert('Продукт успешно добавлен в избранное')
-                productSetFavorite.textContent = 'favorite'
+            if(addToUser(dbProduct, 'favorites')) {
+                // Менять значки на кнопке после нажатия
+                if(productSetFavorite.textContent == 'favorite_border') {
+                    alert('Продукт успешно добавлен в избранное')
+                    productSetFavorite.textContent = 'favorite'
+                }
+                else {
+                    alert('Продукт успешно удален из избранных')
+                    productSetFavorite.textContent = 'favorite_border'
+                }
             }
-            else {
-                alert('Продукт успешно удален из избранных')
-                productSetFavorite.textContent = 'favorite_border'
-            } 
 
-            addToUser(dbProduct, 'favorites')
+            
         })
         productTop.append(productSetFavorite)
 
@@ -417,16 +554,107 @@ function addToUser(product, place) {
             })
             .then(res => res.json())
             .then(res => console.log(res))
+
+        return true
     }else {
         showHideModal()
+
+        return false
     }
 }
 // Product page
 
 function renderProductPage (product) {
+    clearMain()
     // Product page
     const productPage = createDOMElement('div', 'product-page')
     main.append(productPage)
+
+        // nav
+        const productPageNav = createDOMElement('div', 'search-page__nav')
+        productPage.append(productPageNav)
+            const home = createDOMElement('span', '')
+            home.textContent = 'Главная'
+            home.addEventListener('click', renderMain)
+            const allCategories = createDOMElement('span', '')
+            allCategories.textContent = 'Все категории'
+            allCategories.addEventListener('click', () => {
+                renderSearchPage(allProducts)
+            })
+            let currentCategory;
+            const currentCategorySpan = createDOMElement('span', '')
+            if(product.id <= 10) {
+                currentCategorySpan.textContent = 'Электроника'
+                currentCategory = 'electronics'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage(currentCategory)
+                }
+            }
+            else if (product.id <= 20) {
+                currentCategorySpan.textContent = 'Бытовая техника'
+                currentCategory = 'appliances'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+            else if (product.id <= 30) {
+                currentCategorySpan.textContent = 'Одежда'
+                currentCategory = 'clothes'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+            else if (product.id <= 50) {
+                currentCategorySpan.textContent = 'Аксессуары'
+                currentCategory = 'accessories'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+                
+            }
+            else if (product.id <= 60) {
+                currentCategorySpan.textContent = 'Красота'
+                currentCategory = 'beauty'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+            else if (product.id <= 70) {
+                currentCategorySpan.textContent = 'Здоровье'
+                currentCategory = 'health'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+            else if (product.id <= 80) {
+                currentCategorySpan.textContent = 'Товары для дома'
+                currentCategory = 'home'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+            else if (product.id <= 90) {
+                currentCategorySpan.textContent = 'Строительство и ремонт'
+                currentCategory = 'repair'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+            else if (product.id <= 100) {    
+                currentCategorySpan.textContent = 'Автотовары'
+                currentCategory = 'car'
+                currentCategorySpan.onclick = () => {
+                    renderSearchPage('appliances')
+                }
+            }
+
+            const currentSubcategory = createDOMElement('span', '')
+            currentSubcategory.textContent = product.subCategory
+            currentSubcategory.onclick = () => {
+                renderSearchPage(currentCategory,product.subCategory)
+            }
+            productPageNav.append(home,allCategories, currentCategorySpan, currentSubcategory)
+        
 
         // Product page-top
         const productPageTop = createDOMElement('div', 'product-page__top')
@@ -485,16 +713,6 @@ function renderProductPage (product) {
                 const hr = createDOMElement('hr', '')
                 productPageRight.append(hr)
 
-                // product-colors
-                const productPageColors = createDOMElement('div', 'product-page__colors')
-                productPageRight.append(productPageColors)
-                    // buttons
-                    const buttonColor1 = createDOMElement('button', 'button-color1')
-                    buttonColor1.textContent = 'White'
-                    const buttonColor2 = createDOMElement('button', 'button-color2')
-                    buttonColor2.textContent = 'Black'
-                    productPageColors.append(buttonColor1, buttonColor2)
-
                 // product-price
                 const productPagePrice = createDOMElement('div', 'product-page__price')
                 productPageRight.append(productPagePrice)
@@ -536,14 +754,16 @@ function renderProductPage (product) {
                     // click
                     productPageBasket.addEventListener('click', () => {
 
-                        if(productPageBasket.textContent == 'Убрать из корзины') {
-                            alert('Успешно удаленно из корзины')
-                            productPageBasket.textContent = 'Добавить в корзину'
-                        }else {
-                            alert('Успешно добавлено в корзину')
-                            productPageBasket.textContent = 'Убрать из корзины'
+                        if(addToUser(product, 'basket')) {
+                            if(productPageBasket.textContent == 'Убрать из корзины') {
+                                alert('Успешно удаленно из корзины')
+                                productPageBasket.textContent = 'Добавить в корзину'
+                            }else {
+                                alert('Успешно добавлено в корзину')
+                                productPageBasket.textContent = 'Убрать из корзины'
+                            }
                         }
-                        addToUser(product, 'basket')
+                        
                     })
                     productPageActions.append(productPageBasket)
 
@@ -594,8 +814,117 @@ function renderProductPage (product) {
             //product-page__reviews
             const productPageReviews = createDOMElement('div', 'reviews')
                 //product-page__review
-                addReview(productPageReviews, 'Alex',3.5,'Рот твой шатал')
+                if(product.reviews) {
+                    for(let reviewId of product.reviews) {
+                        addReview(productPageReviews, db.reviews[reviewId - 1])
+                    }
+                }else {
+                    productPageReviews.append('Нету отзывов :(')
+                }
+                
             productPageBottom.append(productPageReviews)
+
+        const writeReview = createDOMElement('form', 'write-review')
+        productPage.append(writeReview)
+            // left (text)
+            const writeReviewText = createDOMElement('textarea', 'write-text')
+            writeReviewText.type = 'textarea'
+            writeReviewText.placeholder = 'Введите свой отзыв'
+            writeReviewText.required = true
+            writeReviewText.minLength = '15'
+            writeReview.append(writeReviewText)
+            // right
+            const writeReviewRight = createDOMElement('div', 'write-right')
+            writeReview.append(writeReviewRight)  
+                    //rating
+                    const writeReviewRating = createDOMElement('div', 'write-rating')
+                        //input
+                        const input = createDOMElement ('input', '')
+                        input.id = 'rating'
+                        input.type = 'number'
+                        input.max = '5'
+                        input.min = '0'
+                        input.required = true
+                    
+                        const label2 = createDOMElement('label', 'label')
+                        label2.for = 'rating'
+                        label2.textContent = 'рейтинг'
+                        writeReviewRating.append(label2, input)
+                    // submit
+                    const writeReviewSubmit = createDOMElement('button', 'write-submit')
+                    writeReview.onsubmit = (event) => {
+                        event.preventDefault()
+
+                        if(currentAccount) {
+                            
+                            
+
+                            if(productPageReviews.textContent == 'Нету отзывов :(') {
+                                productPageReviews.textContent = ''
+                            }
+
+                            addReview(productPageReviews, {author:currentAccount.name,rating:input.value,text:writeReviewText.value, date:date})
+                        }else {
+                            showHideModal()
+                        }
+                        
+
+                        { // Добавляем id отзыва к объекту продукта
+                            if(product.reviews) {
+                                if(!product.reviews.includes(db.reviews.length + 1)) {
+                                    product.reviews.push(db.reviews.length + 1)
+
+                                    fetch('http://localhost:3000/products', {
+                                    method:'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(db.products)
+                                    })
+                                    .then(res => res.json())
+                                    .then(res => console.log(res))
+                                }
+
+                                
+                            }else {
+                                product.reviews = [db.reviews.length + 1]
+
+                                fetch('http://localhost:3000/products', {
+                                    method:'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(db.products)
+                                })
+                                .then(res => res.json())
+                                .then(res => console.log(res))
+                            }
+                        }
+
+                        {// Отправим отзыв на ДБ
+                            let form = {
+                            author:currentAccount.name,
+                            rating:input.value,
+                            text:writeReviewText.value,
+                            date:date
+                            }
+
+                        fetch('http://localhost:3000/reviews', {
+                            method:'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                             },
+                            body: JSON.stringify(form)
+                            })
+                            .then(res => res.json())
+                            .then(res => console.log(res))
+                        }
+
+                        
+                    }
+                    writeReviewSubmit.textContent = 'Отправить'
+                    writeReviewRight.append(writeReviewRating, writeReviewSubmit)
+
                 
 
 
@@ -604,13 +933,13 @@ function renderProductPage (product) {
 }
 const date = new Date()
 const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
-function addReview(reviews,author,rating,text) {
+function addReview(reviews,reviewDB) {
 
         const review = createDOMElement('div', 'review')
         
             //review__author
             const reviewAuthor = createDOMElement('h3', 'review__author')
-            reviewAuthor.textContent = author
+            reviewAuthor.textContent = reviewDB.author
             // div
             const div = createDOMElement('div', 'hz')
             
@@ -622,15 +951,17 @@ function addReview(reviews,author,rating,text) {
                     
                     //span inside
                     const span = createDOMElement('span', '')
-                    span.textContent = rating
+                    span.textContent = reviewDB.rating
                 reviewRating.append(productRatingStar, span)
                 //review__date
                 const reviewDate = createDOMElement('div', 'review__date')
-                reviewDate.textContent = `${date.getDate()} ${months[date.getMonth()]} 2023 г.`
+                let dateFromDB = new Date(reviewDB.date)
+                console.log(dateFromDB, reviewDB.date);
+                reviewDate.textContent = `${dateFromDB.getDate()} ${months[dateFromDB.getMonth()]} 2023 г.`
             div.append(reviewRating, reviewDate)
             //review__text
             const reviewText = createDOMElement('p', 'review__text')
-            reviewText.textContent = text
+            reviewText.textContent = reviewDB.text
         review.append(reviewAuthor, div, reviewText)
     reviews.append(review)
         
@@ -717,10 +1048,11 @@ regForm.addEventListener('submit', async (event) => {
     sendData(formData)
     
     currentAccount = formData
+    currentAccount.id = db.users.length + 2
     formData.email = '';
     formData.tel = '';
     
-    
+    db.users.push(currentAccount)
 
 })
 // При входе
@@ -738,7 +1070,6 @@ signInForm.addEventListener('submit', (event) => {
 
                 // Убрать слово "Войти"
                 logIn.classList.remove('log-in')
-                logIn.style.width = '20%'
 
                 currentAccount = user
 
@@ -905,10 +1236,12 @@ function getSettings() {
                 
                 let accountPage = doc.querySelector('.account-page')
                 accountPage.remove()
-                renderMain()
+                
                 exitAccount()
                 logIn.classList.add('log-in')
                 alert('Вы успешно вышли из системы!')
+
+                renderMain()
             })
             settingsExit.textContent = 'Выйти из системы'
             
@@ -1016,7 +1349,7 @@ for(let button of favoritesButton) {
 }
 
 
-function renderSearchPage(category, subcategory = false) {
+function renderSearchPage(category, subcategory = false, searchWord = false) {
     clearMain()
 
     // Сохраним ссылку на текущую категорию
@@ -1091,6 +1424,41 @@ function renderSearchPage(category, subcategory = false) {
             const searchPageProducts = createDOMElement('div', 'products')
             searchPageContent.append(searchPageProducts)
 
+            // Адаптив
+        
+        const paramsButton = createDOMElement('button', 'params-button')
+        // иконка на кнопке
+        const span = createDOMElement('span', 'material-icons')
+        span.textContent = 'settings'
+        paramsButton.append(span, 'фильтры')
+
+        paramsButton.onclick = () => {
+            paramsMenu.style.display = 'flex'
+            searchPage.style.display = 'none'
+            footer.style.display = 'none'
+        }
+    navBottom.append(paramsButton)
+
+    const paramsMenu = createDOMElement('div', 'params-menu')
+    main.append(paramsMenu)
+
+    let windowWidth = window.innerWidth
+    console.log(windowWidth);
+    
+    if(windowWidth < 920) {
+        paramsMenu.append(searchPageParams)
+    }
+
+    // Получаем ширину экрана при изменении
+    window.addEventListener('resize', () => {
+        windowWidth = window.innerWidth
+        console.log(windowWidth);
+
+        if(windowWidth < 920) {
+            paramsMenu.append(searchPageParams)
+        }
+    })
+
         // Менять контент страницы по категории
         if(category == allProducts) {
             currentCategoryName.textContent = 'Все категории'
@@ -1103,14 +1471,17 @@ function renderSearchPage(category, subcategory = false) {
                 
                 subcategory.addEventListener('click', () => {
                     currentCategory = subcategory.id
-                    renderProducts(currentCategory)
+                    renderProducts(currentCategory,false,searchWord)
                     
-                    // Изменит название категории
+                    // Изменить название категории
                     currentCategoryName.textContent = subcategory.textContent
                     // Добавить название в nav 
                     let span1 = createDOMElement('span', '')
                     span1.textContent = currentCategoryName.textContent
-                    searchPageNav.append(span1)
+                    searchPageNav.insertBefore(span1, navBottom)
+                    span1.onclick = () => {
+                        renderSearchPage(currentCategory, false, searchWord)
+                    } 
                     // Добавление подкатегорий
                     searchPageSubcategories.textContent = ''
 
@@ -1129,22 +1500,30 @@ function renderSearchPage(category, subcategory = false) {
                         let subCategory = createDOMElement('div', 'categories__subcategory')
                         subCategory.textContent = subcategoryName
                         searchPageSubcategories.append(subCategory)
+
+                        
         
                         subCategory.addEventListener('click', () => {
                             currentSubcategory = subcategoryName
-                            renderProducts(currentCategory,subcategoryName)
+                            renderProducts(currentCategory,subcategoryName, searchWord)
+
+                            if(doc.querySelectorAll('.search-page__nav span').length >= 4) {
+                                doc.querySelectorAll('.search-page__nav span')[3].remove()
+                            }
+
+                            // Добавить название подкатегории в nav
+                            const span = createDOMElement('span', '')
+                            span.textContent = subcategoryName
+                            searchPageNav.insertBefore(span, navBottom)
                         })
                     }
                 })
                 searchPageSubcategories.append(subcategory)
             }
             
-            for(let productObject of allProducts) {
-                let product = createProduct(productObject)
-                searchPageProducts.append(product)
-            }
+            renderProducts(allProducts,false, searchWord)
         }else {
-            // Добавление подкатегорий 
+            // Кнопка "Все категории"
             const previousCategory = createDOMElement('div', 'categories__subcategory')
             searchPageSubcategories.append(previousCategory)
                 const span = createDOMElement('span', 'material-icons')
@@ -1154,10 +1533,9 @@ function renderSearchPage(category, subcategory = false) {
                     renderSearchPage(allProducts)
                 })
 
-            // Показ товаров
-            renderProducts(currentCategory, currentSubcategory)
             
 
+            // Добавление подкатегорий
             for(let subcategoryName of getSubCategories(currentCategory)) {
                 let subcategory = createDOMElement('div', 'categories__subcategory')
                 subcategory.textContent = subcategoryName
@@ -1165,9 +1543,26 @@ function renderSearchPage(category, subcategory = false) {
 
                 subcategory.addEventListener('click', () => {
                     currentSubcategory = subcategoryName
+                    currentCategoryName.textContent = subcategoryName
+
                     renderProducts(currentCategory, subcategoryName)
+            
+                    if(doc.querySelectorAll('.search-page__nav span').length >= 4) {
+                        doc.querySelectorAll('.search-page__nav span')[3].remove()
+                    }
+
+                    // Добавить название подкатегории в nav
+                    const span = createDOMElement('span', '')
+                    span.textContent = subcategoryName
+                    searchPageNav.insertBefore(span, navBottom)
                 })
             }
+
+            // Показ товаров
+            renderProducts(currentCategory, currentSubcategory, searchWord)
+            
+
+            
             
 
             
@@ -1179,49 +1574,68 @@ function renderSearchPage(category, subcategory = false) {
             }
             else if(category == 'appliances') {
                 currentCategoryName.textContent = 'Бытовая техника'
-            }else {
+            }
+            else if(category == 'clothes') {
+                currentCategoryName.textContent = 'Одежда'
+            }
+            else if(category == 'shoes') {
+                currentCategoryName.textContent = 'Обувь'
+            }
+            else if(category == 'accessories') {
+                currentCategoryName.textContent = 'Аксессуары'
+            }
+            else if(category == 'beauty') {
+                currentCategoryName.textContent = 'Красота'
+            }
+            else if(category == 'health') {
+                currentCategoryName.textContent = 'Здоровье'
+            }
+            else if(category == 'home') {
+                currentCategoryName.textContent = 'Товары для дома'
+            }
+            else if(category == 'repair') {
+                currentCategoryName.textContent = 'Строительство и ремонт'
+            }
+            else if(category == 'car') {
+                currentCategoryName.textContent = 'Автотовары'
+            }
+            else {
                 console.log('none');
             }
             // добавить название категории в nav
             const navSpan = createDOMElement('span', '')
                 navSpan.textContent = currentCategoryName.textContent
-                searchPageNav.append(navSpan)
+                searchPageNav.insertBefore(navSpan, navBottom)
                 navSpan.addEventListener('click', () => {
                     renderSearchPage(category)
+                    console.log('clicked');
                 })
+
+            // Добавить название подкатегории в nav
+            if(currentSubcategory) {
+                // Добавить название подкатегории в nav
+                const span = createDOMElement('span', '')
+                span.textContent = currentSubcategory
+                searchPageNav.insertBefore(span, navBottom)
+                currentCategoryName.textContent = currentSubcategory
+            }
         }
         
-        // Адаптив
-        const paramsButton = createDOMElement('button', 'params-button')
-            // иконка на кнопке
-            const span = createDOMElement('span', 'material-icons')
-            span.textContent = 'settings'
-            paramsButton.append(span, 'фильтры')
-        navBottom.append(paramsButton)
-
-        const paramsMenu = createDOMElement('div', 'params-menu')
-        body.append(paramsMenu)
-
-        let windowWidth = window.innerWidth
-        console.log(windowWidth);
         
-        // Получаем ширину экрана при изменении
-        window.addEventListener('resize', () => {
-            windowWidth = window.innerWidth
-            console.log(windowWidth);
-
-            if(windowWidth < 920) {
-                
-            }
-        })
         
       
-    function renderProducts(category, subcategory = false) {
+    function renderProducts(category, subcategory = false, searchWord = false) {
         // Очистим searchProducts
         searchPageProducts.textContent = ''
 
+        // Адаптив
+        if(paramsMenu){
+            paramsMenu.style.display = 'none'
+            searchPage.style.display = 'block'
+        }
+
         // Достаём продукты
-        let products = getProducts(category,[+minInput.value, +maxInput.value], subcategory)
+        let products = getProducts(category,[+minInput.value, +maxInput.value], subcategory, searchWord)
         // Показываем их
         for(let product of products) {
             product = createProduct(product)
@@ -1230,9 +1644,9 @@ function renderSearchPage(category, subcategory = false) {
 
         
     }
-    function getProducts(category, price, subcategory, searchRegexp) {
+    function getProducts(category, price, subcategory, searchWord) {
         // Проверяем значения необязательных параметров
-        if(isNaN(price[0])) price = [0, 100000]
+        if(isNaN(price[0])) price = [0, 9999999]
 
         let filteredProducts = [];
         // Достаём все продукты указаноой категории
@@ -1251,8 +1665,8 @@ function renderSearchPage(category, subcategory = false) {
         categoryProducts.forEach((product) => {
             // Фильтруем по цене
             if(product.price >= price[0] && product.price <= price[1]) filteredProducts.push(product)
-            
         })
+        console.log('По цене: ' + filteredProducts);
 
         if(subcategory) {
             // Фильтруем по подкатегории
@@ -1265,10 +1679,61 @@ function renderSearchPage(category, subcategory = false) {
             }
         }
 
+        if(searchWord) {
+            // Фильтруем по поиску
+            let searchRegexp = new RegExp(searchWord, 'gi')
+            for(let i = 0; i < filteredProducts.length; i++) {
+                let product = filteredProducts[i]
+                if(!product.name.match(searchRegexp)) {
+                    filteredProducts.splice(i,1)
+                    i--
+                }else {
+                    
+                }
+            }
+        }
+
 
         // Возвращаем продукты
         return filteredProducts
     }
+    
+}
+
+
+if(window.pageYOffset > 200) {
+    yakor.style.bottom = '10px'
+}else {
+    yakor.style.bottom = '-100px'
+}
+
+yakor.onclick = () => {
+    window.scrollTo({
+        top:0,
+        left:0,
+        behavior:"smooth"
+    })
+}
+
+window.onscroll = () => {
+    if(window.pageYOffset > 200) {
+        yakor.style.bottom = '10px'
+    }else {
+        yakor.style.bottom = '-100px'
+    }
+}
+
+
+
+// footer
+const columnHeadings = doc.querySelectorAll('.column-heading')
+for(let heading of columnHeadings) {
+    heading.addEventListener('click', () => {
+        if(windowWidth < 768) {
+            heading.parentElement.classList.toggle('opened')
+        }  
+    })
+    
     
 }
 
@@ -1285,13 +1750,12 @@ fetch('http://localhost:3000/db')
         
         // Привязка к аккаунту
         currentAccount = db.users.find(user => user.active == true)
-        // renderMain()
+        renderMain()
         // renderProductPage(db.products.electronics[0])
-        renderSearchPage(allProducts)
+        // renderSearchPage(allProducts)
         
 
 
         // Убрать слово "Войти" если аккаунт уже есть
         if(currentAccount) logIn.classList.remove('log-in')
-        
     })
